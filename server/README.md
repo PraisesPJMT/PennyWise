@@ -1,7 +1,7 @@
 # 📗 Table of Contents <a name="readme-top"></a>
 
 - [📗 Table of Contents ](#-table-of-contents-)
-  - [📖 PennyWize ](#-pennywize-)
+  - [📖 PennyWize Server ](#-pennywize-server-)
   - [🛠 Built With ](#-built-with-)
     - [⚙️ Tech Stack ](#️-tech-stack-)
     - [💡 Key Features ](#-key-features-)
@@ -18,11 +18,10 @@
   - [⭐️ Show your support ](#️-show-your-support-)
   - [❓ FAQ ](#-faq-)
   - [🙏 Acknowledgments ](#-acknowledgments-)
-  - [📝 License ](#-license-)
 
-## 📖 PennyWize <a name="pennywize"></a>
+## 📖 PennyWize Server <a name="pennywize"></a>
 
-> `PennyWize` is a mobile web application where you can manage your budget: you have a list of expense associated with a group, so that you can see how much money you spent and on what.
+> `PennyWize Server` is the server (Back-End) of the PennyWize application. `PennyWize` is a mobile web application where you can manage your budget: you have a list of expense associated with a group, so that you can see how much money you spent and on what.
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -67,10 +66,6 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-> ## 🎞️ App Preview <a name="preview"></a>
-
-> Coming soon ...
-
 ## 🎞️ UML Diagram <a name="umldiagram"></a>
 
 > Coming soon ...
@@ -91,7 +86,6 @@
 
 > The following applications are required to be installed for the project to run!
 
-- Install a modern browser e.g [Google Chrome](https://www.google.com/chrome/), [Edge](https://www.microsoft.com/en-us/edge?r=1), [Firefox](https://www.mozilla.org/en-US/exp/firefox/new/) etc.
 - Install [Node.js](https://nodejs.org/en/download/) LTS version
 - Install [Git](https://git-scm.com/downloads)
 
@@ -101,7 +95,7 @@ Clone this repository to your desired folder:
 
 ```sh
   git clone git@github.com:PraisesPJMT/PennyWise.git
-  cd pennywize
+  cd pennywize/server
 ```
 
 ### Install
@@ -114,10 +108,28 @@ Install this project with:
 
 ### Usage
 
-To set up the server
+To setup your development environment
+
+- Create a `.env` file in the same directory as the `server`
+- Create the following variable in the `.env` file and substitute \<data> with the appropriate values for your machine
+
+```
+    DB_PORT=5005
+    DB_USERNAME=<your postgres user name>
+    DB_NAME=pennywise
+    DB_PASSWORD=<your postgres password>
+```
+
+To create the database, execute the following command:
 
 ```sh
-  npm sever
+  npx sequelize-cl db:create
+```
+
+To run the database migration, execute the following command:
+
+```sh
+  npx sequelize-cl db:migate
 ```
 
 To run the project, execute the following command:
@@ -126,7 +138,8 @@ To run the project, execute the following command:
   npm run dev
 ```
 
-- After running `npm run dev`, use the endpoint on [http://localhost:5134/](http://localhost:5134/)!
+- After running `npm run dev`, use the endpoint on [http://localhost:5000/](http://localhost:5000/)!
+- For more information please visit [How to Test API Endpoint (Complete Guide)](https://apidog.com/blog/test-api-endpoint/).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -168,18 +181,11 @@ Give a ⭐️ if you like this project!
 - **How I can run this project?**
 
   - After cloning repository, move to the server directory using the terminal command `cd pennywize/server`, run `npm install` to install all dependencies. Then run `npm run dev` to run the project.
-  - After doing the above, move to the client directory using the terminal command `cd ../client`, run `npm install` to install all dependencies. Then run `npm run dev` to run the project.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
 > - Tip hart to you for checking this project out
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## 📝 License <a name="license"></a>
-
-This project is [MIT](./LICENSE) licensed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
