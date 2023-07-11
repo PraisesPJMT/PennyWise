@@ -86,6 +86,7 @@
 
 > The following applications are required to be installed for the project to run!
 
+- Install [PostgreSQL](https://www.postgresql.org/download/) database
 - Install [Node.js](https://nodejs.org/en/download/) LTS version
 - Install [Git](https://git-scm.com/downloads)
 

@@ -27,7 +27,7 @@ app.use('/users', require('./controllers/user'));
 // Running Server
 app.listen({ port: PORT }, async () => {
   // await sequelize.authenticate();
-  await sequelize.sync({ force: true });
-  // await sequelize.sync();
+  // await sequelize.sync({ force: true });
+  await sequelize.sync();
   console.log(`Listening on port ${PORT}`);
 });
