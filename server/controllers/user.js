@@ -1,10 +1,12 @@
 const express = require('express');
+const authorize = require('../Middlewares/authorization');
 
-const { User } = require('../models');
 const router = express.Router();
 
+const { User } = require('../models');
+
 // Get all users
-router.get('/', async (req, res) => {
+router.get('/', authorize, async (req, res) => {
   try {
     const users = await User.findAll();
 
@@ -18,7 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get a users
-router.get('/:user_id', async (req, res) => {
+router.get('/:user_id', authorize, async (req, res) => {
   const { user_id } = req.params;
   try {
     const user = await User.findOne({ where: { user_id } });
@@ -37,7 +39,7 @@ router.get('/:user_id', async (req, res) => {
 });
 
 // Update user
-router.put('/:user_id', async (req, res) => {
+router.put('/:user_id', authorize, async (req, res) => {
   const { user_id } = req.params;
 
   try {
