@@ -1,11 +1,15 @@
 const express = require('express');
+const generateJWT = require('../utilities/jwtGenerator');
+const authorize = require('../Middlewares/authorization');
+
 require('dotenv').config();
+
 const { User } = require('../models');
 
 const bcrypt = require('bcrypt');
 const router = express.Router();
 
-const SALT = process.env.SALT || 10;
+const SALT = Number(process.env.SALT) || 10;
 
 // Register user
 router.post('/register', async (req, res) => {
@@ -59,9 +63,21 @@ router.post('/login', async (req, res) => {
       res.status(401).json({ message: 'Invalid login credentials!' });
     }
 
+    const token = generateJWT(logUser.user_id);
+
     res
       .status(200)
-      .json({ data: logUser, message: 'User logged in successfully!' });
+      .json({ data: logUser, token, message: 'User logged in successfully!' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Verify user
+router.get('/verify', authorize, (req, res) => {
+  try {
+    res.status(200).json({ data: true, message: 'User is verified!' });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: error.message });
