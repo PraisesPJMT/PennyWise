@@ -21,7 +21,7 @@
 
 ## 📖 PennyWize Server <a name="pennywize"></a>
 
-> `PennyWize Server` is the server (Back-End) of the PennyWize application. `PennyWize` is a mobile web application where you can manage your budget: you have a list of expense associated with a group, so that you can see how much money you spent and on what.
+> `PennyWize Server` is the server (Back-End) of the PennyWize application built with Node.js, express, & postgres. `PennyWize` is a mobile web application where you can manage your budget: you have a list of expense associated with a group, so that you can see how much money you spent and on what.
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -59,10 +59,9 @@
 
 > The following are the server endpoints
 
-- **User:** `GET` `POST` `PUT` `DELETE` /users, `GET` /users/:userId
-- **User Settings:** `PUT` /settings/:userId/:settingsId
-- **Group:** `GET` /groups, `POST` `PUT` `DELETE` `GET` /group/:groupId
-- **Expense:** `GET` /expenses, `POST` `PUT` `DELETE` `GET` /expense/:expenseId
+- Used `Sequelize` for ORM
+- User authentication using custom middleware
+- Authorization using `JSON Web Token (JWT)`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -72,7 +71,21 @@
 
 ## 🚀 Live Endpoint <a name="live-endpoint"></a>
 
-> Coming soon ...
+> BASE_URL Coming soon ...
+
+- **Session**
+  - **Register User:** `POST` BASE_URL/session/register
+  - **Login User:** `POST` BASE_URL/session/login
+  - **Verify User:** `GET` BASE_URL/session/verify
+- **User**
+  - **Get User:** `GET` BASE_URL/user/:user_id
+  - **Update User:** `PUT` BASE_URL/user/:user_id
+  - **Delete Account:** `DELETE` BASE_URL/user/:user_id
+- **Budget Group**
+  - **Create Group:** `GET` BASE_URL/group
+  - **Get Group:** `GET` BASE_URL/group/:group_id
+  - **Update Group:** `PUT` BASE_URL/group/:group_id
+  - **Delete Group:** `DELETE` BASE_URL/group/:group_id
 
 <!-- - [Live Demo Link]() -->
 
