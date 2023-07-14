@@ -18,14 +18,17 @@ app.use(cors());
 app.use(express.json());
 
 // ROUTES //
-// Session Route
+// Session Routes
 app.use('/session', require('./controllers/sessions'));
 
-// User Route
+// User Routes
 app.use('/user', require('./controllers/user'));
 
-// User Route
+// Group Routes
 app.use('/group', require('./controllers/group'));
+
+// Group Routes
+app.use('/group', require('./controllers/expense'));
 
 // Running Server
 app.listen({ port: PORT }, async () => {

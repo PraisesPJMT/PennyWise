@@ -82,10 +82,16 @@
   - **Update User:** `PUT` BASE_URL/user/:user_id
   - **Delete Account:** `DELETE` BASE_URL/user/:user_id
 - **Budget Group**
-  - **Create Group:** `GET` BASE_URL/group
+  - **Create Group:** `POST` BASE_URL/group
   - **Get Group:** `GET` BASE_URL/group/:group_id
   - **Update Group:** `PUT` BASE_URL/group/:group_id
   - **Delete Group:** `DELETE` BASE_URL/group/:group_id
+- **Budget Expenses**
+  - **Create Expense:** `POST` BASE_URL/group/:group_id/expense
+  - **Get Expenses:** `GET` BASE_URL/group/:group_id/expense
+  - **Get Expense:** `GET` BASE_URL/group/:group_id/expense/:expense_id
+  - **Update Expense:** `PUT` BASE_URL/group/:group_id/:expense_id
+  - **Delete Expense:** `DELETE` BASE_URL/group/:group_id/:expense_id
 
 <!-- - [Live Demo Link]() -->
 

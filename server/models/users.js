@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Group }) {
       // define association here
-      this.hasMany(Group, { foreignKey: 'user_id', as: 'groups' });
+      this.hasMany(Group, { foreignKey: 'user_id', as: 'group' });
     }
 
     toJSON() {
@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       funds: {
-        type: DataTypes.STRING,
+        type: DataTypes.FLOAT,
         allowNull: false,
         defaultValue: 0,
       },

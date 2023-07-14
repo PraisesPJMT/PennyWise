@@ -18,7 +18,9 @@ router.post('/register', async (req, res) => {
     const emailUser = await User.findOne({ where: { email } });
 
     if (emailUser) {
-      return res.status(409).json({ message: 'User with email address exist!' });
+      return res
+        .status(409)
+        .json({ message: 'User with email address exist!' });
     }
 
     const salt = await bcrypt.genSalt(SALT);
@@ -31,9 +33,11 @@ router.post('/register', async (req, res) => {
       harshed_password: bcryptPassword,
     });
 
-    return res.status(201).json({ data: user, message: 'User created successfully!' });
+    return res
+      .status(201)
+      .json({ data: user, message: 'User created successfully!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });
@@ -69,7 +73,7 @@ router.post('/login', async (req, res) => {
       .status(200)
       .json({ data: logUser, token, message: 'User logged in successfully!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });
@@ -79,7 +83,7 @@ router.get('/verify', authorize, (req, res) => {
   try {
     return res.status(200).json({ data: true, message: 'User is verified!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });
