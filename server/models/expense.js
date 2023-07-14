@@ -1,30 +1,29 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Group extends Model {
+  class expense extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User, Expense }) {
+    static associate({ Group }) {
       // define association here
-      this.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
-      this.hasMany(Expense, { foreignKey: 'group_id', as: 'expenses' });
+      this.belongsTo(Group, { foreignKey: 'group_id', as: 'group' });
     }
 
     toJSON() {
-      return { ...this.get(), user_id: undefined };
+      return { ...this.get(), group_id: undefined };
     }
   }
-  Group.init(
+  expense.init(
     {
-      group_id: {
+      expense_id: {
         type: DataTypes.UUID,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
       },
-      user_id: {
+      group_id: {
         type: DataTypes.UUID,
         allowNull: false,
       },
@@ -43,6 +42,11 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { msg: 'Description is required!' },
         },
       },
+      amount: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 0,
+      },
       icon: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -51,20 +55,12 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { msg: 'Icon can not be an empty string!' },
         },
       },
-      theme: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: { msg: 'Theme is required!' },
-          notEmpty: { msg: 'Theme can not be an empty string!' },
-        },
-      },
     },
     {
       sequelize,
-      modelName: 'Group',
-      tableName: 'groups',
+      modelName: 'Expense',
+      tableName: 'expenses',
     }
   );
-  return Group;
+  return expense;
 };

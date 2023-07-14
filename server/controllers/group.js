@@ -3,7 +3,7 @@ const authorize = require('../Middlewares/authorization');
 
 const router = express.Router();
 
-const { User, Group } = require('../models');
+const { User, Group, Expense } = require('../models');
 
 // Get all groups
 router.get('/', authorize, async (req, res) => {
@@ -14,7 +14,10 @@ router.get('/', authorize, async (req, res) => {
       return res.status(404).json({ message: 'User does not exist!' });
     }
 
-    const groups = await Group.findAll({ where: { user_id } });
+    const groups = await Group.findAll({
+      where: { user_id },
+      include: 'expenses',
+    });
 
     return res
       .status(200)
@@ -35,7 +38,10 @@ router.get('/:group_id', authorize, async (req, res) => {
       return res.status(404).json({ message: 'User does not exist!' });
     }
 
-    const group = await Group.findOne({ where: { user_id, group_id } });
+    const group = await Group.findOne({
+      where: { user_id, group_id },
+      include: 'expenses',
+    });
 
     if (!group) {
       return res.status(404).json({ message: 'Group does not exist!' });
@@ -127,6 +133,8 @@ router.delete('/:group_id', authorize, async (req, res) => {
     if (!group) {
       return res.status(404).json({ message: 'Group does not exist!' });
     }
+
+    await Expense.destroy({ where: { group_id } });
 
     await group.destroy();
 
