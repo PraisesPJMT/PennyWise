@@ -3,7 +3,7 @@ const authorize = require('../Middlewares/authorization');
 
 const router = express.Router();
 
-const { User, Group, Expense } = require('../models');
+const { Group, Expense } = require('../models');
 
 // Get all groups
 router.get('/', authorize, async (req, res) => {
@@ -23,7 +23,7 @@ router.get('/', authorize, async (req, res) => {
       .status(200)
       .json({ data: groups, message: 'Groups retrieved successfully!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });
@@ -51,7 +51,7 @@ router.get('/:group_id', authorize, async (req, res) => {
       .status(200)
       .json({ data: group, message: 'Group retrieved successfully!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });
@@ -79,7 +79,7 @@ router.post('/', authorize, async (req, res) => {
       .status(201)
       .json({ data: group, message: 'Group created successfully!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });
@@ -113,7 +113,7 @@ router.put('/:group_id', authorize, async (req, res) => {
       .status(200)
       .json({ data: group, message: 'Group updated successfully!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });
@@ -142,7 +142,7 @@ router.delete('/:group_id', authorize, async (req, res) => {
       .status(200)
       .json({ data: group, message: 'Group deleted successfully!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });

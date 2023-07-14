@@ -3,7 +3,7 @@ const authorize = require('../Middlewares/authorization');
 
 const router = express.Router();
 
-const { User, Group } = require('../models');
+const { User, Group, Expense } = require('../models');
 
 // Get all users
 router.get('/', authorize, async (req, res) => {
@@ -14,7 +14,7 @@ router.get('/', authorize, async (req, res) => {
       .status(200)
       .json({ data: users, message: 'Users retrieved successfully!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });
@@ -33,7 +33,7 @@ router.get('/:user_id', authorize, async (req, res) => {
       .status(200)
       .json({ data: user, message: 'User retrieved successfully!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });
@@ -82,7 +82,7 @@ router.put('/:user_id', authorize, async (req, res) => {
       .status(200)
       .json({ data: updatedUser, message: 'User updated successfully!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });
@@ -98,9 +98,15 @@ router.delete('/:user_id', authorize, async (req, res) => {
       return res.status(404).json({ message: 'User does not exist!' });
     }
 
-    const deletedGroups = await Group.destroy({ where: { user_id } });
+    const userGroups = await Group.findAll({ where: { user_id } });
 
-    console.log('Destroyed Groups: ', deletedGroups);
+    const purgeExpenses = async (group) => {
+      await Expense.destroy({ where: { group_id: group.group_id } });
+    };
+
+    userGroups.forEach((group) => purgeExpenses(group));
+
+    await Group.destroy({ where: { user_id } });
 
     await user.destroy();
 
@@ -108,7 +114,7 @@ router.delete('/:user_id', authorize, async (req, res) => {
       .status(200)
       .json({ data: user, message: 'User deleted successfully!' });
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 });
