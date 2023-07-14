@@ -22,7 +22,10 @@ app.use(express.json());
 app.use('/session', require('./controllers/sessions'));
 
 // User Route
-app.use('/users', require('./controllers/user'));
+app.use('/user', require('./controllers/user'));
+
+// User Route
+app.use('/group', require('./controllers/group'));
 
 // Running Server
 app.listen({ port: PORT }, async () => {

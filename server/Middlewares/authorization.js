@@ -19,7 +19,7 @@ const authorize = (req, res, next) => {
     next();
   } catch (error) {
     console.error(error.message);
-    res.status(401).json({ message: 'Token is not valid' });
+    return res.status(401).json({ message: 'Token is not valid' });
   }
 };
 
