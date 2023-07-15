@@ -45,7 +45,7 @@
 </details>
 
 <details>
-  <summary>Framewordks</summary>
+  <summary>Frameworks</summary>
   <ul>
     <li><a href="https://sequelize.org
 ">Sequelize</a></li>
@@ -58,12 +58,12 @@
 
 ### 💡 Key Features <a name="key-features"></a>
 
-> The following are the server endpoints
+> The following are the key features of the app
 
-- **User:** `GET` `POST` `PUT` `DELETE` /users, `GET` /users/:userId
-- **User Settings:** `PUT` /settings/:userId/:settingsId
-- **Group:** `GET` /groups, `POST` `PUT` `DELETE` `GET` /group/:groupId
-- **Expense:** `GET` /expenses, `POST` `PUT` `DELETE` `GET` /expense/:expenseId
+- Type safety using TypeScript
+- User management
+- Budget grouping, editing, deleting and customization management
+- User dashborad customization
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -119,6 +119,12 @@ To set up the server
 
 ```sh
   npm sever
+```
+
+To set up the client
+
+```sh
+  npm client
 ```
 
 To run the project, execute the following command:

@@ -1,12 +1,11 @@
 # 📗 Table of Contents <a name="readme-top"></a>
 
 - [📗 Table of Contents ](#-table-of-contents-)
-  - [📖 PennyWize Server ](#-pennywize-server-)
+  - [📖 PennyWize Client ](#-pennywize-client-)
   - [🛠 Built With ](#-built-with-)
     - [⚙️ Tech Stack ](#️-tech-stack-)
     - [💡 Key Features ](#-key-features-)
-  - [🎞️ UML Diagram ](#️-uml-diagram-)
-  - [🚀 Live Endpoint ](#-live-endpoint-)
+  - [🚀 Live Link ](#-live-link-)
   - [💻 Getting Started ](#-getting-started-)
     - [Prerequisites](#prerequisites)
     - [Setup](#setup)
@@ -19,9 +18,9 @@
   - [❓ FAQ ](#-faq-)
   - [🙏 Acknowledgments ](#-acknowledgments-)
 
-## 📖 PennyWize Server <a name="pennywize"></a>
+## 📖 PennyWize Client <a name="pennywize"></a>
 
-> `PennyWize Server` is the server (Back-End) of the PennyWize application built with Node.js, express, & postgres. `PennyWize` is a mobile web application where you can manage your budget: you have a list of expense associated with a group, so that you can see how much money you spent and on what.
+> `PennyWize Client` is the client (Front-End) of the PennyWize application built with React.js & TypeScript. `PennyWize` is a mobile web application where you can manage your budget: you have a list of expense associated with a group, so that you can see how much money you spent and on what.
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -32,24 +31,16 @@
 <details>
   <summary>Language</summary>
   <ul>
-    <li><a href="https://nodejs.org/">Node.JS</a></li>
-  </ul>
-</details>
-
-<details>
-  <summary>Database</summary>
-  <ul>
-    <li><a href="https://www.postgresql.org">Postgresql</a></li>
+    <li><a href="https://www.typescriptlang.org/">TypeScript</a></li>
   </ul>
 </details>
 
 <details>
   <summary>Frameworks</summary>
   <ul>
-    <li><a href="https://sequelize.org
-">Sequelize</a></li>
-<li><a href="https://expressjs.com/
-">Express</a></li>
+    <li><a href="https://react.dev/">React</a></li>
+<li><a href="https://mui.com/material-ui/
+">MaterialUI</a></li>
   </ul>
 </details>
 
@@ -57,41 +48,18 @@
 
 ### 💡 Key Features <a name="key-features"></a>
 
-> The following are the features of the endpoints
+> The following are the key features of the app
 
-- Used `Sequelize` for ORM
-- User authentication using custom middleware
-- Authorization using `JSON Web Token (JWT)`
+- Type safety using TypeScript
+- User management
+- Budget grouping, editing, deleting and customization management
+- User dashborad customization
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## 🎞️ UML Diagram <a name="umldiagram"></a>
+## 🚀 Live Link <a name="live-endpoint"></a>
 
 > Coming soon ...
-
-## 🚀 Live Endpoint <a name="live-endpoint"></a>
-
-> BASE_URL Coming soon ...
-
-- **Session**
-  - **Register User:** `POST` BASE_URL/session/register
-  - **Login User:** `POST` BASE_URL/session/login
-  - **Verify User:** `GET` BASE_URL/session/verify
-- **User**
-  - **Get User:** `GET` BASE_URL/user/:user_id
-  - **Update User:** `PUT` BASE_URL/user/:user_id
-  - **Delete Account:** `DELETE` BASE_URL/user/:user_id
-- **Budget Group**
-  - **Create Group:** `POST` BASE_URL/group
-  - **Get Group:** `GET` BASE_URL/group/:group_id
-  - **Update Group:** `PUT` BASE_URL/group/:group_id
-  - **Delete Group:** `DELETE` BASE_URL/group/:group_id
-- **Budget Expenses**
-  - **Create Expense:** `POST` BASE_URL/group/:group_id/expense
-  - **Get Expenses:** `GET` BASE_URL/group/:group_id/expense
-  - **Get Expense:** `GET` BASE_URL/group/:group_id/expense/:expense_id
-  - **Update Expense:** `PUT` BASE_URL/group/:group_id/:expense_id
-  - **Delete Expense:** `DELETE` BASE_URL/group/:group_id/:expense_id
 
 <!-- - [Live Demo Link]() -->
 
@@ -105,8 +73,7 @@
 
 > The following applications are required to be installed for the project to run!
 
-- Install [PostgreSQL](https://www.postgresql.org/download/) database
-- Install [Node.js](https://nodejs.org/en/download/) LTS version
+- Install a modern browser e.g [Google Chrome](https://www.google.com/chrome/), [Edge](https://www.microsoft.com/en-us/edge?r=1), [Firefox](https://www.mozilla.org/en-US/exp/firefox/new/) etc.
 - Install [Git](https://git-scm.com/downloads)
 
 ### Setup
@@ -115,7 +82,7 @@ Clone this repository to your desired folder:
 
 ```sh
   git clone git@github.com:PraisesPJMT/PennyWise.git
-  cd pennywize/server
+  cd pennywize/client
 ```
 
 ### Install
@@ -130,27 +97,7 @@ Install this project with:
 
 To setup your development environment
 
-- Create a `.env` file in the same directory as the `server`
-- Create the following variable in the `.env` file and substitute \<data> with the appropriate values for your machine
-
-```
-    DB_PORT=5005
-    DB_USERNAME=<your postgres user name>
-    DB_NAME=pennywise
-    DB_PASSWORD=<your postgres password>
-```
-
-To create the database, execute the following command:
-
-```sh
-  npx sequelize-cl db:create
-```
-
-To run the database migration, execute the following command:
-
-```sh
-  npx sequelize-cl db:migate
-```
+- Run the `server` of the application. Instruction of how to do this is on the `README.md` file in the `../server` directory
 
 To run the project, execute the following command:
 
@@ -158,8 +105,8 @@ To run the project, execute the following command:
   npm run dev
 ```
 
-- After running `npm run dev`, use the endpoint on [http://localhost:5000/](http://localhost:5000/)!
-- For more information please visit [How to Test API Endpoint (Complete Guide)](https://apidog.com/blog/test-api-endpoint/).
+- After running `npm run dev`, use the app on [http://localhost:5173/](http://localhost:5173/) in the browser!
+- For more information please visit [Vite](https://vitejs.dev/guide/).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -200,7 +147,11 @@ Give a ⭐️ if you like this project!
 
 - **How I can run this project?**
 
-  - After cloning repository, move to the server directory using the terminal command `cd pennywize/server`, run `npm install` to install all dependencies. Then run `npm run dev` to run the project.
+  - After cloning repository, run `npm install` to install all dependencies. Then run `npm run dev` to run the project.
+
+- **How I can run tests?**
+
+  - After cloning repository, run `npm install` to install all dependencies. Then run `npm test` to run the tests.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
