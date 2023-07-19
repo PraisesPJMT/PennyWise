@@ -1,32 +1,23 @@
 import {
   createContext,
   useContext,
-  useMemo,
   useCallback,
   ReactNode,
   FC,
   useState,
+  useEffect,
 } from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { PaletteMode } from '@mui/material';
-import { green, purple } from '@mui/material/colors';
+
+interface AppThemeProviderProps {
+  children: ReactNode;
+}
+
+type ModeType = 'light' | 'dark';
 
 export type ThemeContextType = {
-  mode: PaletteMode;
+  mode: ModeType;
   toggleMode: () => void;
 };
-
-export interface CustomTheme {
-  palette: {
-    mode: PaletteMode;
-    primary: {
-      main: string;
-    };
-    secondary: {
-      main: string;
-    };
-  };
-}
 
 const ThemeContext = createContext<ThemeContextType>({
   mode: 'dark',
@@ -35,39 +26,29 @@ const ThemeContext = createContext<ThemeContextType>({
 
 export const useThemeContext = () => useContext(ThemeContext);
 
-interface AppThemeProviderProps {
-  children: ReactNode;
-}
+
 
 export const AppThemeProvider: FC<AppThemeProviderProps> = ({ children }) => {
-  const [mode, setMode] = useState<PaletteMode>('dark');
+  const [mode, setMode] = useState<ModeType>('dark');
 
-  const toggleMode = useCallback(
-    () => setMode((prev: PaletteMode) => (prev === 'dark' ? 'light' : 'dark')),
-    []
-  );
+  const toggleMode = useCallback(() => {
+    setMode((prev: ModeType) => (prev === 'dark' ? 'light' : 'dark'));
+  }, []);
 
-  const theme: CustomTheme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-          primary: {
-            main: purple[500],
-          },
-          secondary: {
-            main: green[500],
-          },
-        },
-      }),
-    [mode]
-  );
+  useEffect(() => {
+    localStorage.setItem('mode', mode);
+  }, [mode]);
+
+  useEffect(() => {
+    const storedMode = localStorage.getItem('mode');
+    if (storedMode && (storedMode === 'light' || storedMode === 'dark')) {
+      setMode(storedMode);
+    }
+  }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <ThemeContext.Provider value={{ mode, toggleMode }}>
-        {children}
-      </ThemeContext.Provider>
-    </ThemeProvider>
+    <ThemeContext.Provider value={{ mode, toggleMode }}>
+      {children}
+    </ThemeContext.Provider>
   );
 };
