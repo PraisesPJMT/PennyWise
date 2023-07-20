@@ -1,0 +1,23 @@
+.carousel-container {
+  width: 310px;
+  overflow: hidden;
+
+  .carousel-track {
+    display: flex;
+    transition: transform 1s ease 2s;
+
+    .carousel-slide {
+      flex: 0 0 300px;
+      margin-right: 10px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
