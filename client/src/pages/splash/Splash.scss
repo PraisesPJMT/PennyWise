@@ -1,0 +1,82 @@
+@import '../../index.scss';
+
+#splash {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  min-height: 100vh;
+
+  .screen {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+
+    h1 {
+      color: $orange;
+      text-transform: uppercase;
+      font-size: 2.5rem;
+      margin: 0.5rem 0;
+    }
+
+    h2 {
+      order: -1;
+      color: $green;
+      font-size: medium;
+      text-transform: uppercase;
+    }
+
+    & > div {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+  }
+
+  .carousel {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  #splash {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    height: fit-content;
+    min-height: fit-content;
+  }
+
+  .screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    padding: 0 2rem;
+
+    & h1,
+    & h2 {
+      text-align: center;
+      margin: 0 auto;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    & > div {
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  .carousel {
+    order: -1;
+    height: 50vh;
+  }
+}

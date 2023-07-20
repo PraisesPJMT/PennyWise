@@ -1,11 +1,14 @@
-import Box from '@mui/material/Box';
-import './App.css';
+import { AppThemeProvider } from './theme/theme';
+import Splash from './pages/splash/Splash';
+import './App.scss';
 
 const App: React.FC<{}> = () => {
   return (
-    <Box>
-      <h1>PennyWize</h1>
-    </Box>
+    <AppThemeProvider>
+      <div id="app">
+        <Splash />
+      </div>
+    </AppThemeProvider>
   );
 };
 
