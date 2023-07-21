@@ -1,0 +1,39 @@
+@import '../../index.scss';
+
+#login {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  min-height: 100vh;
+
+  .form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .carousel {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  #login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .form {
+      height: fit-content;
+      padding: 0 2rem;
+    }
+
+    .carousel {
+      display: none;
+    }
+  }
+}
