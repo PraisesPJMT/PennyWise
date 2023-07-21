@@ -1,4 +1,5 @@
 import { useRef, FC } from 'react';
+import { Link } from 'react-router-dom';
 
 import './AppLink.scss';
 
@@ -12,9 +13,9 @@ const AppLink: FC<AppLinkProps> = ({ link, varient, label }) => {
   const ref = useRef(null);
 
   return (
-    <a className={`link ${varient}`} ref={ref} href={link}>
+    <Link className={`link ${varient ? varient : ''}`} ref={ref} to={link}>
       {label}
-    </a>
+    </Link>
   );
 };
 
