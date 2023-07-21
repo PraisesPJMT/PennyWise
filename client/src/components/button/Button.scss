@@ -1,0 +1,38 @@
+@import '../../index.scss';
+
+$lighten: lighten(
+  $color: $blue-dark,
+  $amount: 10,
+);
+
+.button {
+  text-decoration: none;
+  padding: 0.3rem 1rem;
+  border-radius: 0.2rem;
+  font-weight: 600;
+}
+
+.button.long {
+  width: 100%;
+}
+
+.button.fill {
+  background-color: $blue-dark;
+  color: #fff;
+  border: 2px solid $blue-dark;
+
+  &:hover {
+    background-color: $lighten;
+    border: 2px solid $lighten;
+  }
+}
+
+.button.shell {
+  color: $blue-dark;
+  border: 2px solid $blue-dark;
+
+  &:hover {
+    color: $lighten;
+    border: 2px solid $lighten;
+  }
+}
