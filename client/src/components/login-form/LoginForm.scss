@@ -1,0 +1,43 @@
+@import '../../index.scss';
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+
+  h1 {
+    color: $blue-dark;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  p {
+    text-align: center;
+
+    a {
+      text-decoration: none;
+      color: $dark-green;
+      padding: 0.1rem 0.5rem;
+      border: 2px solid $dark-green;
+      border-radius: 0.3rem;
+      background: lighten($color: $green, $amount: 45);
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background: $dark-green;
+        color: #fff;
+      }
+    }
+  }
+
+  & > p.error {
+    background: lighten($color: $orange, $amount: 25);
+    font-size: 0.7rem;
+    width: 100%;
+    padding: 0.05rem 0.5rem;
+    color: $orange;
+    text-align: center;
+    font-weight: 500;
+  }
+}
