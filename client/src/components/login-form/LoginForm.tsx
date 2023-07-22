@@ -8,12 +8,8 @@ import {
 
 import { Link } from 'react-router-dom';
 import { validateLogin } from '../../utilities/helper';
-import {
-  LogDataErrType,
-  LogDataType,
-  initialLogData,
-  initialLogDataErr,
-} from '../../utilities/types';
+import { LogFormDataType, LogDataType } from '../../utilities/types';
+import { initialLogFormData } from '../../utilities/variables';
 
 import Button from '../button/Button';
 import Checkbox from '../checkbox/Checkbox';
@@ -22,9 +18,9 @@ import InputField from '../input-field/InputField';
 import './LoginForm.scss';
 
 const LoginForm: FC<{}> = () => {
-  const [logData, setLogData] = useState<LogDataType>(initialLogData);
+  const [logData, setLogData] = useState<LogFormDataType>(initialLogFormData);
   const [logDataErr, setLogDataErr] =
-    useState<LogDataErrType>(initialLogDataErr);
+    useState<LogDataType>(initialLogFormData);
 
   const [error, setError] = useState<string>('');
   const [init, setInit] = useState<boolean>(false);
@@ -32,7 +28,7 @@ const LoginForm: FC<{}> = () => {
   const handeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setError('');
     setInit(false);
-    setLogDataErr(initialLogDataErr);
+    setLogDataErr(initialLogFormData);
 
     const { name, value, type } = event.target;
 

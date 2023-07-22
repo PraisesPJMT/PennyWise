@@ -5,21 +5,21 @@
 export interface LogDataType {
   email: string;
   password: string;
+}
+
+export interface LogFormDataType extends LogDataType {
   rememberMe: boolean;
 }
 
-export interface LogDataErrType {
+// Registration Types
+
+export interface RegDataType {
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
 }
 
-export const initialLogData = {
-  email: '',
-  password: '',
-  rememberMe: false,
-};
-
-export const initialLogDataErr = {
-  email: '',
-  password: '',
-};
+export interface RegFormDataType extends RegDataType {
+  confirmPassword: string;
+}
