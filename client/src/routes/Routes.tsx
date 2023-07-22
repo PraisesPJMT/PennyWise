@@ -3,6 +3,8 @@ import App from '../App';
 import Splash from '../pages/splash/Splash';
 import Login from '../pages/login/Login';
 
+import Register from '../pages/register/Register';
+
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -15,6 +17,10 @@ export const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
+      },
+      {
+        path: '/register',
+        element: <Register />,
       },
     ],
   },
