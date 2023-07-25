@@ -2,11 +2,12 @@ import {
   ChangeEvent,
   FC,
   FormEvent,
+  useEffect,
   useState,
-  // useEffect,
 } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../store/auth';
 import { validateRegistration } from '../../utilities/helper';
 import { RegFormDataType } from '../../utilities/types';
 import { initialRegData } from '../../utilities/variables';
@@ -22,6 +23,14 @@ const RegistrationForm: FC<{}> = () => {
 
   const [error, setError] = useState<string>('');
   const [init, setInit] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
+  const register = useAuth((state) => state.register);
+  const reset = useAuth((state) => state.reset);
+  const status = useAuth((state) => state.status);
+  const stateError = useAuth((state) => state.error);
+  const message = useAuth((state) => state.message);
 
   const handeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setError('');
@@ -39,9 +48,36 @@ const RegistrationForm: FC<{}> = () => {
     setInit(false);
 
     if (validateRegistration(regData, setRegDataErr)) {
-      console.log('Submitted: ', regData);
+      const { confirmPassword, ...rest } = regData;
+      register(rest);
+      setInit(true);
     }
   };
+
+  useEffect(() => {
+    if (init && status === 'succeeded') {
+      navigate('/login');
+    }
+
+    if (init && stateError) {
+      setError(message);
+    }
+  }, [status, stateError, message]);
+
+  useEffect(() => {
+    const softReset = () => {
+      setInit(false);
+      setRegData(initialRegData);
+      setError('');
+      setInit(false);
+      setRegDataErr(initialRegData);
+    };
+
+    return () => {
+      reset();
+      softReset();
+    };
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>
