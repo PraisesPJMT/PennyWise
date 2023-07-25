@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "server": "cd server && npm run server",
+    "client": "cd client && npm run dev -- --open",
+    "app": "npm run server && npm run client"
+  },
   "dependencies": {
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.14.2"
