@@ -1,12 +1,7 @@
-import {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useState,
-  // useEffect,
-} from 'react';
+import { ChangeEvent, FC, FormEvent, useState, useEffect } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../store/auth';
 import { validateLogin } from '../../utilities/helper';
 import { LogFormDataType, LogDataType } from '../../utilities/types';
 import { initialLogFormData } from '../../utilities/variables';
@@ -19,11 +14,17 @@ import './LoginForm.scss';
 
 const LoginForm: FC<{}> = () => {
   const [logData, setLogData] = useState<LogFormDataType>(initialLogFormData);
-  const [logDataErr, setLogDataErr] =
-    useState<LogDataType>(initialLogFormData);
+  const [logDataErr, setLogDataErr] = useState<LogDataType>(initialLogFormData);
 
   const [error, setError] = useState<string>('');
   const [init, setInit] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const login = useAuth((state) => state.login);
+  const reset = useAuth((state) => state.reset);
+  const status = useAuth((state) => state.status);
+  const stateError = useAuth((state) => state.error);
+  const message = useAuth((state) => state.message);
 
   const handeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setError('');
@@ -46,9 +47,36 @@ const LoginForm: FC<{}> = () => {
     setInit(false);
 
     if (validateLogin(logData, setLogDataErr)) {
-      console.log('Submitted: ', logData);
+      const { rememberMe, ...rest } = logData;
+      login(rest);
+      setInit(true);
     }
   };
+
+  useEffect(() => {
+    if (init && status === 'succeeded') {
+      navigate('/');
+    }
+
+    if (init && stateError) {
+      setError(message);
+    }
+  }, [status, stateError, message]);
+
+  useEffect(() => {
+    const softReset = () => {
+      setInit(false);
+      setLogData(initialLogFormData);
+      setError('');
+      setInit(false);
+      setLogDataErr(initialLogFormData);
+    };
+
+    return () => {
+      reset();
+      softReset();
+    };
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>
