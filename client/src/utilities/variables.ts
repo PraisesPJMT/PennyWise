@@ -21,3 +21,15 @@ export const initialRegData = {
   password: '',
   confirmPassword: '',
 };
+
+// Gen Constants
+export const initialUser = {
+  user_id: '',
+  first_name: '',
+  last_name: '',
+  email: '',
+  funds: 0,
+  show_funds: false,
+  compute_funds: false,
+  currency: 'USD',
+};
