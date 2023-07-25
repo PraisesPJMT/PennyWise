@@ -1,9 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
-import Splash from '../pages/splash/Splash';
 import Login from '../pages/login/Login';
-
 import Register from '../pages/register/Register';
+import Dashboard from '../pages/dashboard/Dashboard';
 
 export const router = createBrowserRouter([
   {
@@ -12,7 +11,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Splash />,
+        element: <Dashboard />,
       },
       {
         path: '/login',
