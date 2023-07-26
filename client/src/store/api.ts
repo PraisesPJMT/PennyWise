@@ -71,7 +71,7 @@ export const API = {
         status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
         data: null,
         message:
-          error?.response?.data.message ||
+          error.response.data.message ||
           'Something went wrong! Please try again!',
         error: true,
       };
@@ -115,7 +115,7 @@ export const API = {
         status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
         isAuthenticated: false,
         message:
-          error?.response?.data.message ||
+          error.response.data.message ||
           'Something went wrong! Please try again!',
         error: error,
       };
@@ -165,7 +165,7 @@ export const API = {
         user: initialUser,
         isAuthenticated: false,
         message:
-          error?.response?.data.message ||
+          error?.response.data.message ||
           'Something went wrong! Please try again!',
         error: true,
       };

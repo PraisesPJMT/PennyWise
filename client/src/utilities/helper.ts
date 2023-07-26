@@ -1,7 +1,7 @@
 /* Helper Functions */
 
 import { SetStateAction } from 'react';
-import { LogFormDataType, LogDataType, RegFormDataType } from './types';
+import { LogDataType, RegFormDataType } from './types';
 
 export const ValidateEmail = (email: string): boolean => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -87,7 +87,10 @@ export const validateRegistration = (
     flag = false;
   }
 
-  if (!ValidatePassword(data.password) || data.password !== data.confirmPassword) {
+  if (
+    !ValidatePassword(data.password) ||
+    data.password !== data.confirmPassword
+  ) {
     confirmPassword = 'Confirm password should be a match with valid password!';
     flag = false;
   }
@@ -95,4 +98,16 @@ export const validateRegistration = (
   setError({ first_name, last_name, email, password, confirmPassword });
 
   return flag;
+};
+
+export const generateRandomID = () => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let id = '';
+
+  for (let i = 0; i < 4; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    id += characters[randomIndex];
+  }
+
+  return id;
 };
