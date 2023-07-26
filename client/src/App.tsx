@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { AppThemeProvider } from './theme/theme';
-// import Splash from './pages/splash/Splash';
+import NoticeModal from './components/notice/Notice';
+
 import './App.scss';
 
 const App: React.FC<{}> = () => {
@@ -8,6 +9,7 @@ const App: React.FC<{}> = () => {
     <AppThemeProvider>
       <div id="app">
         <Outlet />
+        <NoticeModal />
       </div>
     </AppThemeProvider>
   );

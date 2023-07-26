@@ -1,13 +1,8 @@
-import {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../store/auth';
+import { useNotice } from '../../store/notice';
 import { validateRegistration } from '../../utilities/helper';
 import { RegFormDataType } from '../../utilities/types';
 import { initialRegData } from '../../utilities/variables';
@@ -28,6 +23,7 @@ const RegistrationForm: FC<{}> = () => {
 
   const register = useAuth((state) => state.register);
   const reset = useAuth((state) => state.reset);
+  const setNotice = useNotice((state) => state.setNotice);
   const status = useAuth((state) => state.status);
   const stateError = useAuth((state) => state.error);
   const message = useAuth((state) => state.message);
@@ -56,11 +52,13 @@ const RegistrationForm: FC<{}> = () => {
 
   useEffect(() => {
     if (init && status === 'succeeded') {
+      setNotice({ type: 'success', message });
       navigate('/login');
     }
 
     if (init && stateError) {
       setError(message);
+      setNotice({ type: 'error', message });
     }
   }, [status, stateError, message]);
 
