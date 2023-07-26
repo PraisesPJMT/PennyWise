@@ -2,6 +2,7 @@ import { ChangeEvent, FC, FormEvent, useState, useEffect } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../store/auth';
+import { useNotice } from '../../store/notice';
 import { validateLogin } from '../../utilities/helper';
 import { LogFormDataType, LogDataType } from '../../utilities/types';
 import { initialLogFormData } from '../../utilities/variables';
@@ -22,6 +23,7 @@ const LoginForm: FC<{}> = () => {
 
   const login = useAuth((state) => state.login);
   const reset = useAuth((state) => state.reset);
+  const setNotice = useNotice((state) => state.setNotice);
   const status = useAuth((state) => state.status);
   const stateError = useAuth((state) => state.error);
   const message = useAuth((state) => state.message);
@@ -55,11 +57,13 @@ const LoginForm: FC<{}> = () => {
 
   useEffect(() => {
     if (init && status === 'succeeded') {
+      setNotice({ type: 'success', message });
       navigate('/');
     }
 
     if (init && stateError) {
       setError(message);
+      setNotice({ type: 'error', message });
     }
   }, [status, stateError, message]);
 
