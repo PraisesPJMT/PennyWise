@@ -10,7 +10,7 @@ const INTERVAL = 5;
 const NoticeCard: FC<Notice> = ({ id, type, message }) => {
   const [count, setCount] = useState<number>(INTERVAL);
   const removeNotice = useNotice((state) => state.removeNotice);
-  const timerRef = useRef();
+  const timerRef = useRef<ReturnType<typeof setInterval>>()
 
   const handleRemove = () => {
     removeNotice(id);
@@ -60,7 +60,7 @@ const NoticeModal: FC<{}> = () => {
   return ReactDOM.createPortal(
     <>
       <div id="notice-wrap">
-        {notices.map((not) => (
+        {notices.map((not: Notice) => (
           <NoticeCard
             key={not.id}
             id={not.id}

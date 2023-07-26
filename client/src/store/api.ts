@@ -66,7 +66,7 @@ export const API = {
           error: true,
         };
       }
-    } catch (error) {
+    } catch (error: any) {
       return {
         status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
         data: null,
@@ -110,7 +110,7 @@ export const API = {
           error,
         };
       }
-    } catch (error) {
+    } catch (error: any) {
       return {
         status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
         isAuthenticated: false,
@@ -159,7 +159,7 @@ export const API = {
           error: true,
         };
       }
-    } catch (error) {
+    } catch (error: any) {
       return {
         status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
         user: initialUser,
