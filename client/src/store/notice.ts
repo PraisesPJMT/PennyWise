@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { generateRandomID } from '../utilities/helper';
-
-type NoticeType = 'success' | 'error' | 'warning' | 'idle';
+import { NoticeType } from '../utilities/variables';
 
 export interface NoticeParam {
   message: string;
@@ -13,18 +12,16 @@ export interface Notice extends NoticeParam {
 
 interface NoticeInterface {
   notice: Notice[];
-  //   resetNotice: () => void;
   setNotice: (notice: NoticeParam) => void;
   removeNotice: (noticeId: string) => void;
   clearNotice: () => void;
 }
 
-export const useNotice = create<NoticeInterface>()((set, get) => ({
+export const useNotice = create<NoticeInterface>()((set) => ({
   notice: [
     // { id: 'ABDC', type: 'success', message: 'Login successful!' },
     // { id: 'EFGH', type: 'error', message: 'Invalid credentials!' },
   ],
-  //   resetNotice: () => {},
   setNotice: (notice) => {
     const { type, message } = notice;
     set((state) => ({
