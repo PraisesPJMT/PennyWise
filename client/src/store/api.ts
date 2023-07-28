@@ -1,7 +1,12 @@
 import axios from 'axios';
 // import jwt_decode from 'jwt-decode';
-import { FormDataType } from '../utilities/types';
-import { initialUser } from '../utilities/variables';
+import {
+  FormDataType,
+  Response,
+  UserResponse,
+  VerifyResponse,
+} from '../utilities/types';
+import { Status, initialUser } from '../utilities/variables';
 
 // Base URL
 // const BASE_URL = 'api'; // Production
@@ -40,27 +45,18 @@ export const API = {
     try {
       const response = await api.post(endPoint, formData);
       const { status } = response;
-      const { data, message, error } = response.data;
-
-      if (error) {
-        return {
-          status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
-          data,
-          message,
-          error,
-        };
-      }
+      const { data, message } = response.data as Response;
 
       if (status === 201) {
         return {
-          status: 'succeeded', // 'idle' || 'succeeded' || 'failed' || 'loading'
+          status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
           data,
           message,
           error: false,
         };
       } else {
         return {
-          status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
+          status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
           data: null,
           message,
           error: true,
@@ -68,7 +64,7 @@ export const API = {
       }
     } catch (error: any) {
       return {
-        status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
+        status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
         data: null,
         message:
           error.response.data.message ||
@@ -84,35 +80,26 @@ export const API = {
     try {
       const response = await api.get('/session/verify');
       const { status } = response;
-      const { data, message, error } = response.data;
-
-      if (error) {
-        return {
-          status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
-          isAuthenticated: false,
-          message,
-          error,
-        };
-      }
+      const { data, message } = response.data as VerifyResponse;
 
       if (status === 200) {
         return {
-          status: 'succeeded', // 'idle' || 'succeeded' || 'failed' || 'loading'
+          status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
           isAuthenticated: data,
           message,
           error: false,
         };
       } else {
         return {
-          status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
+          status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
           isAuthenticated: false,
           message,
-          error,
+          error: true,
         };
       }
     } catch (error: any) {
       return {
-        status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
+        status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
         isAuthenticated: false,
         message:
           error.response.data.message ||
@@ -129,22 +116,13 @@ export const API = {
     try {
       const response = await api.post('/session/login', formData);
       const { status } = response;
-      const { data, token, message, error } = response.data;
+      const { data, token, message } = response.data as UserResponse;
 
-      if (error) {
-        return {
-          status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
-          user: data,
-          isAuthenticated: false,
-          message,
-          error,
-        };
-      }
-
-      if (status === 200) {
+      if (status === 200 && token) {
         sessionStorage.setItem('token', token);
+
         return {
-          status: 'succeeded', // 'idle' || 'succeeded' || 'failed' || 'loading'
+          status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
           user: data,
           isAuthenticated: true,
           message,
@@ -152,7 +130,7 @@ export const API = {
         };
       } else {
         return {
-          status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
+          status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
           user: initialUser,
           isAuthenticated: false,
           message,
@@ -161,11 +139,11 @@ export const API = {
       }
     } catch (error: any) {
       return {
-        status: 'failed', // 'idle' || 'succeeded' || 'failed' || 'loading'
+        status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
         user: initialUser,
         isAuthenticated: false,
         message:
-          error?.response.data.message ||
+          error.response.data.message ||
           'Something went wrong! Please try again!',
         error: true,
       };
@@ -180,7 +158,7 @@ export const API = {
     );
 
     return {
-      status, // 'idle' || 'succeeded' || 'failed' || 'loading'
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
       message,
       error,
     };

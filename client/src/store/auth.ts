@@ -1,15 +1,15 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { FormDataType, StatusType, UserType } from '../utilities/types';
-import { initialUser } from '../utilities/variables';
+import { FormDataType, UserType } from '../utilities/types';
+import { Status, initialUser } from '../utilities/variables';
 import { API } from './api';
 
 interface AuthStateInterface {
-  user: UserType | any;
-  status: StatusType | any;
-  isAuthenticated: boolean | any;
-  message: string | any;
-  error: boolean | any;
+  user: UserType;
+  status: Status;
+  isAuthenticated: boolean;
+  message: string;
+  error: boolean;
   reset: () => void;
   logout: () => void;
   login: (formData: FormDataType) => Promise<void>;
@@ -22,14 +22,14 @@ export const useAuth = create<AuthStateInterface>()(
     persist(
       (set, get) => ({
         user: initialUser,
-        status: 'idle',
+        status: Status.IDLE,
         isAuthenticated: false,
         message: '',
-        error: null,
+        error: false,
         reset: () =>
           set((state) => ({
             ...state,
-            status: 'idle',
+            status: Status.IDLE,
             message: '',
             error: false,
           })),
@@ -64,7 +64,7 @@ export const useAuth = create<AuthStateInterface>()(
           set((state) => ({
             ...state,
             user: initialUser,
-            status: 'idle',
+            status: Status.IDLE,
             isAuthenticated: false,
             message: '',
             error: false,
