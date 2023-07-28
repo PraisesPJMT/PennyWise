@@ -5,7 +5,7 @@ import { useAuth } from '../../store/auth';
 import { useNotice } from '../../store/notice';
 import { validateLogin } from '../../utilities/helper';
 import { LogFormDataType, LogDataType } from '../../utilities/types';
-import { initialLogFormData } from '../../utilities/variables';
+import { NoticeType, Status, initialLogFormData } from '../../utilities/variables';
 
 import Button from '../button/Button';
 import Checkbox from '../checkbox/Checkbox';
@@ -56,14 +56,14 @@ const LoginForm: FC<{}> = () => {
   };
 
   useEffect(() => {
-    if (init && status === 'succeeded') {
-      setNotice({ type: 'success', message });
+    if (init && status === Status.SUCCEEDED) {
+      setNotice({ type: NoticeType.SUCCESS, message });
       navigate('/');
     }
 
     if (init && stateError) {
       setError(message);
-      setNotice({ type: 'error', message });
+      setNotice({ type: NoticeType.SUCCESS, message });
     }
   }, [status, stateError, message]);
 
