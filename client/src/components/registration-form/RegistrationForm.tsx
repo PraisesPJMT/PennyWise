@@ -5,7 +5,7 @@ import { useAuth } from '../../store/auth';
 import { useNotice } from '../../store/notice';
 import { validateRegistration } from '../../utilities/helper';
 import { RegFormDataType } from '../../utilities/types';
-import { initialRegData } from '../../utilities/variables';
+import { NoticeType, Status, initialRegData } from '../../utilities/variables';
 
 import Button from '../button/Button';
 import InputField from '../input-field/InputField';
@@ -51,14 +51,14 @@ const RegistrationForm: FC<{}> = () => {
   };
 
   useEffect(() => {
-    if (init && status === 'succeeded') {
-      setNotice({ type: 'success', message });
+    if (init && status === Status.SUCCEEDED) {
+      setNotice({ type: NoticeType.SUCCESS, message });
       navigate('/login');
     }
 
     if (init && stateError) {
       setError(message);
-      setNotice({ type: 'error', message });
+      setNotice({ type: NoticeType.ERROR, message });
     }
   }, [status, stateError, message]);
 
