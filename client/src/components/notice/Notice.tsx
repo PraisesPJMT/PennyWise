@@ -10,7 +10,7 @@ const INTERVAL = 5;
 const NoticeCard: FC<Notice> = ({ id, type, message }) => {
   const [count, setCount] = useState<number>(INTERVAL);
   const removeNotice = useNotice((state) => state.removeNotice);
-  const timerRef = useRef<ReturnType<typeof setInterval>>()
+  const timerRef = useRef<ReturnType<typeof setInterval>>();
 
   const handleRemove = () => {
     removeNotice(id);
@@ -42,7 +42,7 @@ const NoticeCard: FC<Notice> = ({ id, type, message }) => {
 
   return (
     <>
-      <div className={`notice-card ${type}`}>
+      <div className={`notice-card ${type.toLocaleLowerCase()}`}>
         <button type="button" onClick={handleRemove}>
           <BiX />
         </button>
