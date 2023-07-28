@@ -33,3 +33,16 @@ export const initialUser = {
   compute_funds: false,
   currency: 'USD',
 };
+
+export enum Status {
+  LOADING= "LOADING",
+  SUCCEEDED= "SUCCEEDED",
+  IDLE= "IDLE",
+  FAILED= "FAILED",
+}
+
+export enum NoticeType {
+  SUCCESS = 'SUCCESS',
+  WARNING = 'WARNING',
+  ERROR = 'ERROR',
+}
