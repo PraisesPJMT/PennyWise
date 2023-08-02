@@ -25,18 +25,22 @@
         display: none;
       }
 
-      input:checked ~ .theme-box,
-      input:focus ~ .theme-box,
-      input:hover ~ .theme-box {
+      input:checked ~ .icon-box,
+      input:focus ~ .icon-box,
+      input:hover ~ .icon-box {
         border: 2px solid #000;
         opacity: 1;
       }
 
-      .theme-box {
+      .icon-box {
         width: 40px;
         height: 40px;
         border-radius: 0.4rem;
         opacity: 0.4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
       }
     }
   }
