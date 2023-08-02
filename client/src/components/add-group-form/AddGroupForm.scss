@@ -1,0 +1,49 @@
+@import '../../index.scss';
+
+form#add-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  background: #fff;
+
+  h1 {
+    color: $blue-dark;
+    text-align: center;
+    margin: 0 auto;
+    background: none;
+  }
+
+  .btn-wrap {
+    display: flex;
+    gap: 1rem;
+    background: none;
+  }
+
+  .col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    background: none;
+  }
+
+  & > p.error {
+    background: lighten($color: $orange, $amount: 25);
+    font-size: 0.7rem;
+    width: 100%;
+    padding: 0.05rem 0.5rem;
+    color: $orange;
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 768px) {
+  form#add-group {
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  }
+}

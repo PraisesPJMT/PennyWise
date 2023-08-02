@@ -1,6 +1,7 @@
 import axios from 'axios';
 // import jwt_decode from 'jwt-decode';
 import {
+  APIResponse,
   FormDataType,
   Response,
   UserResponse,
@@ -48,6 +49,8 @@ export const API = {
       const { data, message } = response.data as Response;
 
       if (status === 201) {
+        console.log('Created Group: ', JSON.stringify(data));
+
         return {
           status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
           data,
@@ -162,6 +165,21 @@ export const API = {
     );
 
     return {
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Create Group
+  createGroup: async (formData: FormDataType) => {
+    const response = await API.creatAction('/group', formData);
+    // as UserResponse
+
+    const { status, data, message, error } = response as APIResponse;
+
+    return {
+      group: data,
       status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
       message,
       error,
