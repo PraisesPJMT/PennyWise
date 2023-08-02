@@ -17,13 +17,9 @@ import SelectTheme from '../select-theme/SelectTheme';
 import SelectIcon from '../select-icon/SelectIcon';
 import Button from '../button/Button';
 
-import './AddGroupForm.scss';
+import './CreateGroupForm.scss';
 
-interface AddGroupFormInterface {
-  closeModal: () => void;
-}
-
-const AddGroupForm: FC<AddGroupFormInterface> = ({ closeModal }) => {
+const CreateGroupForm: FC<{}> = () => {
   const [groupData, setGroupData] =
     useState<typeof inititalGroupData>(inititalGroupData);
   const [groupDataErr, setGroupDataErr] =
@@ -75,13 +71,13 @@ const AddGroupForm: FC<AddGroupFormInterface> = ({ closeModal }) => {
 
   const handleCanel = () => {
     resetForm();
-    closeModal();
+    navigate('/groups');
   };
 
   useEffect(() => {
     if (init && status === Status.SUCCEEDED) {
       setNotice({ type: NoticeType.SUCCESS, message });
-      navigate('/');
+      navigate('/groups');
     }
 
     if (init && storeError) {
@@ -90,17 +86,13 @@ const AddGroupForm: FC<AddGroupFormInterface> = ({ closeModal }) => {
     }
   }, [status, storeError, message]);
 
-  //   useEffect(() => {
-  //     console.log('Group Data: ', groupData);
-  //   }, [groupData]);
-
   useEffect(() => {
     return () => resetForm();
   }, []);
 
   return (
     <form id="add-group" onSubmit={handleSubmit}>
-      <h1>Add Group</h1>
+      <h1>Create Group</h1>
 
       {error.length > 0 ? <p className="error">{error}</p> : null}
 
@@ -145,7 +137,7 @@ const AddGroupForm: FC<AddGroupFormInterface> = ({ closeModal }) => {
         <Button
           type="submit"
           varient="fill"
-          label="Add Group"
+          label={status === Status.LOADING ? 'Creating...' : 'Create'}
           clickAction={() => {}}
         />
       </div>
@@ -153,4 +145,4 @@ const AddGroupForm: FC<AddGroupFormInterface> = ({ closeModal }) => {
   );
 };
 
-export default AddGroupForm;
+export default CreateGroupForm;

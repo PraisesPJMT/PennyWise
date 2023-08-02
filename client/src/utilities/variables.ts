@@ -91,7 +91,7 @@ export const THEMES = [
   '#FF69B4',
   '#99F443',
   '#00FFFF',
-  '#FCE77D',
+  '#596235',
 ];
 
 export const ICONS = [
