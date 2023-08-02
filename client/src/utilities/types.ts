@@ -1,5 +1,7 @@
 /* Application Types */
 
+import { Status } from './variables';
+
 // Gen Types
 
 export type UserType = {
@@ -11,6 +13,16 @@ export type UserType = {
   show_funds: boolean;
   compute_funds: boolean;
   currency: string;
+};
+
+export type GroupType = {
+  group_id: string;
+  title: string;
+  description: string;
+  icon: string;
+  theme: string;
+  updatedAt: string;
+  createdAt: string;
 };
 
 // Login Types
@@ -37,8 +49,17 @@ export interface RegFormDataType extends RegDataType {
   confirmPassword: string;
 }
 
+// Group Types
+
+export type GroupFormDataType = {
+  title: string;
+  description: string;
+  icon: string;
+  theme: string;
+};
+
 // API Types
-export type FormDataType = LogDataType | RegFormDataType;
+export type FormDataType = LogDataType | RegFormDataType | GroupFormDataType;
 
 export type UserResponse = {
   data: UserType;
@@ -46,9 +67,21 @@ export type UserResponse = {
   token: string;
 };
 
+export type StdApiResponse = {
+  data: GroupType | boolean;
+  message: string;
+};
+
 export type VerifyResponse = {
   data: boolean;
   message: string;
 };
 
-export type Response = UserResponse | VerifyResponse;
+export type APIResponse = {
+  data: GroupType;
+  message: string;
+  error: boolean;
+  status: keyof typeof Status;
+};
+
+export type Response = UserResponse | StdApiResponse;

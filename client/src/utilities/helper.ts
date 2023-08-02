@@ -1,7 +1,7 @@
 /* Helper Functions */
 
 import { SetStateAction } from 'react';
-import { LogDataType, RegFormDataType } from './types';
+import { GroupFormDataType, LogDataType, RegFormDataType } from './types';
 
 export const ValidateEmail = (email: string): boolean => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -110,4 +110,52 @@ export const generateRandomID = () => {
   }
 
   return id;
+};
+
+export const validateGroup = (
+  groupData: GroupFormDataType,
+  setGroupErr: {
+    (value: SetStateAction<GroupFormDataType>): void;
+    (arg0: {
+      title: string;
+      description: string;
+      icon: string;
+      theme: string;
+    }): void;
+  }
+) => {
+  let title = '',
+    description = '',
+    theme = '',
+    icon = '',
+    flag = true;
+
+  if (!ValidateText(groupData.title)) {
+    title = 'Invalid title value!';
+    flag = false;
+  }
+
+  // if (!ValidateText(groupData.description)) {
+  //   description = 'Invalid description value!';
+  //   flag = false;
+  // }
+
+  if (!ValidateText(groupData.icon)) {
+    icon = 'Invalid description value!';
+    flag = false;
+  }
+
+  if (!ValidateText(groupData.theme)) {
+    theme = 'Invalid theme value!';
+    flag = false;
+  }
+
+  setGroupErr({
+    title,
+    description,
+    theme,
+    icon,
+  });
+
+  return flag;
 };
