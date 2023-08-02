@@ -59,12 +59,12 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
       },
       show_funds: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
       compute_funds: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },

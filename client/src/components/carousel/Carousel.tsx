@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 import Rect from '../../assets/rect.png';
 import Star from '../../assets/star.png';
 import Triang from '../../assets/triangle.png';
@@ -7,7 +7,7 @@ import './Carousel.scss';
 
 const images = [Rect, Star, Triang];
 
-const Carousel = () => {
+const Carousel: FC<{}> = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
