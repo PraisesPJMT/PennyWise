@@ -90,6 +90,8 @@ export const API = {
           error: false,
         };
       } else {
+        API.logOut();
+
         return {
           status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
           isAuthenticated: false,
@@ -98,11 +100,13 @@ export const API = {
         };
       }
     } catch (error: any) {
+      API.logOut();
+
       return {
         status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
         isAuthenticated: false,
         message:
-          error.response.data.message ||
+          error.response?.data?.message ||
           'Something went wrong! Please try again!',
         error: error,
       };

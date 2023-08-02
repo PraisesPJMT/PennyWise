@@ -34,15 +34,15 @@ export const initialUser = {
   currency: 'USD',
 };
 
-export enum Status {
-  LOADING= "LOADING",
-  SUCCEEDED= "SUCCEEDED",
-  IDLE= "IDLE",
-  FAILED= "FAILED",
-}
+export const Status = {
+  LOADING: 'LOADING',
+  SUCCEEDED: 'SUCCEEDED',
+  IDLE: 'IDLE',
+  FAILED: 'FAILED',
+} as const;
 
-export enum NoticeType {
-  SUCCESS = 'SUCCESS',
-  WARNING = 'WARNING',
-  ERROR = 'ERROR',
-}
+export const NoticeType = {
+  SUCCESS: 'SUCCESS',
+  WARNING: 'WARNING',
+  ERROR: 'ERROR',
+} as const;

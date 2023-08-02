@@ -6,7 +6,7 @@ import { API } from './api';
 
 interface AuthStateInterface {
   user: UserType;
-  status: Status;
+  status: keyof typeof Status;
   isAuthenticated: boolean;
   message: string;
   error: boolean;
@@ -37,6 +37,8 @@ export const useAuth = create<AuthStateInterface>()(
           get().reset();
           const { status, isAuthenticated, message, error } =
             await API.verifyUser();
+
+          if (!isAuthenticated) return get().logout();
           set((state) => ({
             ...state,
             status,
