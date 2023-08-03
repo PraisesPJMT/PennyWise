@@ -6,6 +6,7 @@ import Dashboard from '../pages/dashboard/Dashboard';
 import Groups from '../pages/groups/Groups';
 import CreateGroup from '../pages/group-create/CreateGroup';
 import Overview from '../pages/overview/Overview';
+import GroupDetails from '../pages/group/GroupDetails';
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
               {
                 path: 'new',
                 element: <CreateGroup />,
+              },
+              {
+                path: ':groupId',
+                element: <GroupDetails />,
               },
             ],
           },
