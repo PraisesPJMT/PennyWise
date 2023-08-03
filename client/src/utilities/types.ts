@@ -1,6 +1,6 @@
 /* Application Types */
 
-import { Status } from './variables';
+import { Status, initialGroup } from './variables';
 
 // Gen Types
 
@@ -68,7 +68,7 @@ export type UserResponse = {
 };
 
 export type StdApiResponse = {
-  data: GroupType | boolean;
+  data: typeof initialGroup | (typeof initialGroup)[] | boolean;
   message: string;
 };
 
@@ -77,11 +77,18 @@ export type VerifyResponse = {
   message: string;
 };
 
-export type APIResponse = {
-  data: GroupType;
+export interface APIResponse {
   message: string;
   error: boolean;
   status: keyof typeof Status;
-};
+}
+
+export interface APIGroupResponse extends APIResponse {
+  data: typeof initialGroup | null;
+}
+
+export interface APIGroupsResponse extends APIResponse {
+  data: (typeof initialGroup)[] | null;
+}
 
 export type Response = UserResponse | StdApiResponse;

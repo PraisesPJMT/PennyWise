@@ -1,7 +1,8 @@
 import axios from 'axios';
 // import jwt_decode from 'jwt-decode';
 import {
-  APIResponse,
+  APIGroupResponse,
+  APIGroupsResponse,
   FormDataType,
   Response,
   UserResponse,
@@ -39,6 +40,44 @@ export const API = {
     }
   },
 
+  //   Fetch Action
+  fetchAction: async (endPoint: string) => {
+    API.setApiHeader();
+
+    try {
+      const response = await api.get(endPoint);
+      const { status } = response;
+      const { data, message } = response.data as Response;
+
+      if (status === 200) {
+        console.log('Fetched Data: ', JSON.stringify(data));
+
+        return {
+          status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data,
+          message,
+          error: false,
+        };
+      } else {
+        return {
+          status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data: null,
+          message,
+          error: true,
+        };
+      }
+    } catch (error: any) {
+      return {
+        status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+        data: null,
+        message:
+          error.response.data.message ||
+          'Something went wrong! Please try again!',
+        error: true,
+      };
+    }
+  },
+
   //   Create Action
   creatAction: async (endPoint: string, formData: FormDataType) => {
     API.setApiHeader();
@@ -49,7 +88,85 @@ export const API = {
       const { data, message } = response.data as Response;
 
       if (status === 201) {
-        console.log('Created Group: ', JSON.stringify(data));
+        // console.log('Created Data: ', JSON.stringify(data));
+
+        return {
+          status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data,
+          message,
+          error: false,
+        };
+      } else {
+        return {
+          status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data: null,
+          message,
+          error: true,
+        };
+      }
+    } catch (error: any) {
+      return {
+        status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+        data: null,
+        message:
+          error.response.data.message ||
+          'Something went wrong! Please try again!',
+        error: true,
+      };
+    }
+  },
+
+  //   Edit Action
+  editAction: async (endPoint: string, formData: FormDataType) => {
+    API.setApiHeader();
+
+    try {
+      const response = await api.put(endPoint, formData);
+      const { status } = response;
+      const { data, message } = response.data as Response;
+      console.log('Updated Response: ', response);
+
+      if (status === 200) {
+        // console.log('Updated Data: ', JSON.stringify(data));
+
+        return {
+          status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data,
+          message,
+          error: false,
+        };
+      } else {
+        return {
+          status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data: null,
+          message,
+          error: true,
+        };
+      }
+    } catch (error: any) {
+      return {
+        status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+        data: null,
+        message:
+          error.response.data.message ||
+          'Something went wrong! Please try again!',
+        error: true,
+      };
+    }
+  },
+
+  //   Delete Action
+  deleteAction: async (endPoint: string) => {
+    API.setApiHeader();
+
+    try {
+      const response = await api.delete(endPoint);
+      const { status } = response;
+      const { data, message } = response.data as Response;
+      console.log('Delete Response: ', response);
+
+      if (status === 200) {
+        // console.log('Deleted Data: ', JSON.stringify(data));
 
         return {
           status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
@@ -174,9 +291,64 @@ export const API = {
   // Create Group
   createGroup: async (formData: FormDataType) => {
     const response = await API.creatAction('/group', formData);
-    // as UserResponse
 
-    const { status, data, message, error } = response as APIResponse;
+    const { status, data, message, error } = response as APIGroupResponse;
+
+    return {
+      group: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Fetch All Groups
+  fetchGroups: async () => {
+    const response = await API.fetchAction('/group');
+
+    const { status, data, message, error } = response as APIGroupsResponse;
+
+    return {
+      groups: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Fetch A Group
+  fetchGroup: async (groupId: string) => {
+    const response = await API.fetchAction(`/group/${groupId}`);
+
+    const { status, data, message, error } = response as APIGroupResponse;
+
+    return {
+      group: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Edit Group
+  editGroup: async (groupId: string, formData: FormDataType) => {
+    const response = await API.editAction(`/group/${groupId}`, formData);
+
+    const { status, data, message, error } = response as APIGroupResponse;
+
+    return {
+      group: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Delete Group
+  deleteGroup: async (groupId: string) => {
+    const response = await API.deleteAction(`/group/${groupId}`);
+
+    const { status, data, message, error } = response as APIGroupResponse;
 
     return {
       group: data,

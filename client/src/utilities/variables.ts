@@ -67,6 +67,17 @@ export const initialUser = {
   currency: 'USD',
 };
 
+export const initialGroup = {
+  group_id: '',
+  title: '',
+  description: '',
+  icon: '',
+  theme: '#317773',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  expenses: [],
+};
+
 export const Status = {
   LOADING: 'LOADING',
   SUCCEEDED: 'SUCCEEDED',

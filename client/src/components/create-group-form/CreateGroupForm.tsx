@@ -71,7 +71,7 @@ const CreateGroupForm: FC<{}> = () => {
 
   const handleCanel = () => {
     resetForm();
-    navigate('/groups');
+    navigate(-1);
   };
 
   useEffect(() => {
