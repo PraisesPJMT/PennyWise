@@ -1,6 +1,8 @@
 /* Application Types */
 
-import { Status, initialGroup } from './variables';
+import { Status,
+  // initialGroup
+ } from './variables';
 
 // Gen Types
 
@@ -15,14 +17,25 @@ export type UserType = {
   currency: string;
 };
 
+export type ExpenseType = {
+  expense_id: string;
+  title: string;
+  description: string;
+  icon: string;
+  amount: number;
+  updatedAt: string;
+  createdAt: string;
+};
+
 export type GroupType = {
   group_id: string;
   title: string;
   description: string;
   icon: string;
   theme: string;
-  updatedAt: string;
-  createdAt: string;
+  updatedAt: string | Date;
+  createdAt: string | Date;
+  expenses: ExpenseType[];
 };
 
 // Login Types
@@ -58,8 +71,28 @@ export type GroupFormDataType = {
   theme: string;
 };
 
+// Expense Types
+
+export type ExpenseFormDataType = {
+  title: string;
+  description: string;
+  icon: string;
+  amount: number | string;
+};
+
+export type ExpenseFormErrDataType = {
+  title: string;
+  description: string;
+  icon: string;
+  amount: string;
+};
+
 // API Types
-export type FormDataType = LogDataType | RegFormDataType | GroupFormDataType;
+export type FormDataType =
+  | LogDataType
+  | RegFormDataType
+  | GroupFormDataType
+  | ExpenseFormDataType;
 
 export type UserResponse = {
   data: UserType;
@@ -68,7 +101,7 @@ export type UserResponse = {
 };
 
 export type StdApiResponse = {
-  data: typeof initialGroup | (typeof initialGroup)[] | boolean;
+  data: GroupType[] | boolean;
   message: string;
 };
 
@@ -83,12 +116,16 @@ export interface APIResponse {
   status: keyof typeof Status;
 }
 
+export interface APIExpenseResponse extends APIResponse {
+  data: ExpenseType | null;
+}
+
 export interface APIGroupResponse extends APIResponse {
-  data: typeof initialGroup | null;
+  data: GroupType | null;
 }
 
 export interface APIGroupsResponse extends APIResponse {
-  data: (typeof initialGroup)[] | null;
+  data: GroupType[] | null;
 }
 
 export type Response = UserResponse | StdApiResponse;

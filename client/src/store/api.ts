@@ -1,6 +1,7 @@
 import axios from 'axios';
 // import jwt_decode from 'jwt-decode';
 import {
+  APIExpenseResponse,
   APIGroupResponse,
   APIGroupsResponse,
   FormDataType,
@@ -79,16 +80,17 @@ export const API = {
   },
 
   //   Create Action
-  creatAction: async (endPoint: string, formData: FormDataType) => {
+  createAction: async (endPoint: string, formData: FormDataType) => {
     API.setApiHeader();
 
     try {
       const response = await api.post(endPoint, formData);
       const { status } = response;
       const { data, message } = response.data as Response;
+      console.log('Create Response: ', response);
 
       if (status === 201) {
-        // console.log('Created Data: ', JSON.stringify(data));
+        console.log('Created Data: ', JSON.stringify(data));
 
         return {
           status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
@@ -124,7 +126,7 @@ export const API = {
       const response = await api.put(endPoint, formData);
       const { status } = response;
       const { data, message } = response.data as Response;
-      console.log('Updated Response: ', response);
+      // console.log('Updated Response: ', response);
 
       if (status === 200) {
         // console.log('Updated Data: ', JSON.stringify(data));
@@ -276,7 +278,7 @@ export const API = {
 
   //   Register User
   register: async (formData: FormDataType) => {
-    const { status, message, error } = await API.creatAction(
+    const { status, message, error } = await API.createAction(
       '/session/register',
       formData
     );
@@ -290,7 +292,7 @@ export const API = {
 
   // Create Group
   createGroup: async (formData: FormDataType) => {
-    const response = await API.creatAction('/group', formData);
+    const response = await API.createAction('/group', formData);
 
     const { status, data, message, error } = response as APIGroupResponse;
 
@@ -352,6 +354,23 @@ export const API = {
 
     return {
       group: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Create Expense
+  createExpense: async (groupId: string, formData: FormDataType) => {
+    const response = await API.createAction(
+      `/group/${groupId}/expense`,
+      formData
+    );
+
+    const { status, data, message, error } = response as APIExpenseResponse;
+
+    return {
+      expense: data,
       status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
       message,
       error,

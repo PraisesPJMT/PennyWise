@@ -1,21 +1,29 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { FormDataType } from '../utilities/types';
-import { Status, initialGroup } from '../utilities/variables';
+import { FormDataType, GroupType } from '../utilities/types';
+import {
+  Status,
+  // initialGroup
+} from '../utilities/variables';
 import { API } from './api';
 
 interface StoreStateInterface {
-  groups: (typeof initialGroup)[];
-  group: typeof initialGroup | null;
+  groups: GroupType[];
+  group: GroupType | null;
   status: keyof typeof Status;
   message: string;
   error: boolean;
   reset: () => void;
+
+  // Group
   createGroup: (formData: FormDataType) => void;
   editGroup: (groupId: string, formData: FormDataType) => void;
   deleteGroup: (groupId: string) => void;
   fetchGroups: () => void;
   fetchGroup: (groupId: string) => void;
+
+  // Expense
+  createExpense: (groupId: string, formData: FormDataType) => void;
 }
 
 export const useStore = create<StoreStateInterface>()(
@@ -25,6 +33,7 @@ export const useStore = create<StoreStateInterface>()(
     status: Status.IDLE,
     message: '',
     error: false,
+
     //   Reset Store
     reset: () =>
       set((state) => ({
@@ -33,6 +42,7 @@ export const useStore = create<StoreStateInterface>()(
         message: '',
         error: false,
       })),
+
     //   Create Group
     createGroup: async (formData) => {
       get().reset();
@@ -47,6 +57,7 @@ export const useStore = create<StoreStateInterface>()(
         error,
       }));
     },
+
     //   Edit Group
     editGroup: async (groupId, formData) => {
       get().reset();
@@ -71,6 +82,7 @@ export const useStore = create<StoreStateInterface>()(
         error,
       }));
     },
+
     //   Delete Group
     deleteGroup: async (groupId) => {
       get().reset();
@@ -88,6 +100,7 @@ export const useStore = create<StoreStateInterface>()(
         error,
       }));
     },
+
     //   Fetch Groups
     fetchGroups: async () => {
       get().reset();
@@ -96,12 +109,13 @@ export const useStore = create<StoreStateInterface>()(
 
       set((state) => ({
         ...state,
-        groups: groups ? [...groups] : [...state.groups],
+        groups: groups ? [...groups] : state.groups,
         status,
         message,
         error,
       }));
     },
+
     //   Fetch Group
     fetchGroup: async (groupId) => {
       get().reset();
@@ -111,6 +125,39 @@ export const useStore = create<StoreStateInterface>()(
       set((state) => ({
         ...state,
         group: group ? group : state.group,
+        status,
+        message,
+        error,
+      }));
+    },
+
+    //   Create Expense
+    createExpense: async (groupId, formData) => {
+      get().reset();
+
+      const { status, expense, message, error } = await API.createExpense(
+        groupId,
+        formData
+      );
+
+      // @ts-ignore
+      set((state) => ({
+        ...state,
+        groups: state.groups.map((item) =>
+          item.group_id === groupId
+            ? {
+                ...item,
+                expenses: expense ? [...item.expenses, expense] : item.expenses,
+              }
+            : item
+        ),
+        group:
+          expense && state.group
+            ? {
+                ...state.group,
+                expenses: [...state.group.expenses, expense],
+              }
+            : state.group,
         status,
         message,
         error,

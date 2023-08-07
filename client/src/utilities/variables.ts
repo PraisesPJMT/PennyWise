@@ -55,6 +55,22 @@ export const inititalGroupDataErr = {
   theme: '',
 };
 
+// Expense Constants
+
+export const inititalExpenseData = {
+  title: '',
+  description: '',
+  icon: 'IC01',
+  amount: '',
+};
+
+export const inititalExpenseErrData = {
+  title: '',
+  description: '',
+  icon: '',
+  amount: '',
+};
+
 // Gen Constants
 export const initialUser = {
   user_id: '',
@@ -76,6 +92,16 @@ export const initialGroup = {
   createdAt: new Date(),
   updatedAt: new Date(),
   expenses: [],
+};
+
+export const initialExpense = {
+  expense_id: '',
+  title: '',
+  description: '',
+  icon: '',
+  amount: 0,
+  createdAt: new Date(),
+  updatedAt: new Date(),
 };
 
 export const Status = {

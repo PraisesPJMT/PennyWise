@@ -1,7 +1,13 @@
 /* Helper Functions */
 
 import { SetStateAction } from 'react';
-import { GroupFormDataType, LogDataType, RegFormDataType } from './types';
+import {
+  ExpenseFormDataType,
+  ExpenseFormErrDataType,
+  GroupFormDataType,
+  LogDataType,
+  RegFormDataType,
+} from './types';
 
 export const ValidateEmail = (email: string): boolean => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -19,6 +25,13 @@ export const ValidateText = (text: string): boolean => {
   const MIN_TEXT_LENGTH = 3;
 
   return text.length >= MIN_TEXT_LENGTH;
+};
+
+export const ValidateAmount = (amount: number | string): boolean => {
+  let flag = true;
+  if (!Number(amount)) flag = false;
+  if (Number(amount) < 0) flag = false;
+  return flag;
 };
 
 export const validateLogin = (
@@ -141,7 +154,7 @@ export const validateGroup = (
   // }
 
   if (!ValidateText(groupData.icon)) {
-    icon = 'Invalid description value!';
+    icon = 'Invalid icon value!';
     flag = false;
   }
 
@@ -154,6 +167,54 @@ export const validateGroup = (
     title,
     description,
     theme,
+    icon,
+  });
+
+  return flag;
+};
+
+export const validateExpense = (
+  expenseData: ExpenseFormDataType,
+  setExpenseErr: {
+    (value: SetStateAction<ExpenseFormErrDataType>): void;
+    (arg0: {
+      title: string;
+      description: string;
+      icon: string;
+      amount: string;
+    }): void;
+  }
+) => {
+  let title = '',
+    description = '',
+    amount = '',
+    icon = '',
+    flag = true;
+
+  if (!ValidateText(expenseData.title)) {
+    title = 'Invalid title value!';
+    flag = false;
+  }
+
+  // if (!ValidateText(expenseData.description)) {
+  //   description = 'Invalid description value!';
+  //   flag = false;
+  // }
+
+  if (!ValidateText(expenseData.icon)) {
+    icon = 'Invalid icon value!';
+    flag = false;
+  }
+
+  if (!ValidateAmount(expenseData.amount)) {
+    amount = 'Invalid amount value!';
+    flag = false;
+  }
+
+  setExpenseErr({
+    title,
+    description,
+    amount,
     icon,
   });
 
