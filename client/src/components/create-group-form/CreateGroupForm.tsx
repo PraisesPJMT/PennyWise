@@ -63,7 +63,7 @@ const CreateGroupForm: FC<{}> = () => {
     setInit(false);
 
     if (validateGroup(groupData, setGroupDataErr)) {
-      console.log('Group Data: ', groupData);
+      // console.log('Group Data: ', groupData);
       createGroup(groupData);
       setInit(true);
     }

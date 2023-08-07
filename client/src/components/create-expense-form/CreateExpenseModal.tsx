@@ -1,52 +1,49 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BiX } from 'react-icons/bi';
-// import { useNavigate } from 'react-router-dom';
 
 import { useNotice } from '../../store/notice';
 import { useStore } from '../../store/store';
 import {
   // initialGroup,
-  inititalGroupData,
-  inititalGroupDataErr,
+  inititalExpenseData,
+  inititalExpenseErrData,
   NoticeType,
   Status,
 } from '../../utilities/variables';
-import { validateGroup } from '../../utilities/helper';
+import { validateExpense } from '../../utilities/helper';
 import { GroupType } from '../../utilities/types';
 
 import InputField from '../input-field/InputField';
 import MessageField from '../message-field/MessageField';
-import SelectTheme from '../select-theme/SelectTheme';
 import SelectIcon from '../select-icon/SelectIcon';
 import Button from '../button/Button';
 
-import './EditGroupModal.scss';
+import './CreateExpenseModal.scss';
 
-interface EditGroupModalInterface {
+interface CreateExpenseModalProps {
   modalState: boolean;
   setModalState: (state: boolean) => void;
   group: GroupType;
 }
 
-const EditGroupModal: FC<EditGroupModalInterface> = ({
-  modalState,
-  setModalState,
+const CreateExpenseModal: FC<CreateExpenseModalProps> = ({
   group,
+  setModalState,
+  modalState,
 }) => {
-  const [groupData, setGroupData] =
-    useState<typeof inititalGroupData>(inititalGroupData);
+  const [expenseData, setExpenseData] =
+    useState<typeof inititalExpenseData>(inititalExpenseData);
+  const [expenseDataErr, setExpenseDataErr] = useState<
+    typeof inititalExpenseErrData
+  >(inititalExpenseErrData);
   const [groupId, setGroupId] = useState<string>('');
-  const [groupDataErr, setGroupDataErr] =
-    useState<typeof inititalGroupData>(inititalGroupDataErr);
 
   const [error, setError] = useState<string>('');
   const [init, setInit] = useState<boolean>(false);
 
-  //   const navigate = useNavigate();
-
   const setNotice = useNotice((state) => state.setNotice);
-  const editGroup = useStore((state) => state.editGroup);
+  const createExpense = useStore((state) => state.createExpense);
   const status = useStore((state) => state.status);
   const storeError = useStore((state) => state.error);
   const message = useStore((state) => state.message);
@@ -60,18 +57,18 @@ const EditGroupModal: FC<EditGroupModalInterface> = ({
   ) => {
     setError('');
     setInit(false);
-    setGroupDataErr(inititalGroupDataErr);
+    setExpenseDataErr(inititalExpenseErrData);
 
     const { name, value } = event.target;
 
-    setGroupData((prev) => ({ ...prev, [name]: value }));
+    setExpenseData((prev) => ({ ...prev, [name]: value }));
   };
 
   const resetForm = () => {
     setError('');
     setInit(false);
-    // setGroupData(inititalGroupData);
-    setGroupDataErr(inititalGroupDataErr);
+    setExpenseData(inititalExpenseData);
+    setExpenseDataErr(inititalExpenseErrData);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -79,9 +76,9 @@ const EditGroupModal: FC<EditGroupModalInterface> = ({
     setError('');
     setInit(false);
 
-    if (validateGroup(groupData, setGroupDataErr)) {
-      //   console.log('Group Data: ', groupData);
-      editGroup(groupId, groupData);
+    if (validateExpense(expenseData, setExpenseDataErr)) {
+      console.log('Expense Data: ', expenseData);
+      createExpense(groupId, expenseData);
       setInit(true);
     }
   };
@@ -91,33 +88,31 @@ const EditGroupModal: FC<EditGroupModalInterface> = ({
     closeModal();
   };
 
-  const setForm = () => {
+  const setGroupData = () => {
     if (group) {
-      const { group_id, title, description, icon, theme } = group;
-      setGroupData({ title, icon, description, theme });
+      const { group_id } = group;
       setGroupId(group_id);
     }
   };
 
   useEffect(() => {
-    setForm();
+    setGroupData();
   }, [group]);
 
   useEffect(() => {
     if (init && status === Status.SUCCEEDED) {
       setNotice({ type: NoticeType.SUCCESS, message });
-      //   navigate('/groups');
       closeModal();
     }
 
     if (init && storeError) {
       setError(message);
-      setNotice({ type: NoticeType.ERROR, message });
+      setNotice({ type: NoticeType.SUCCESS, message });
     }
   }, [status, storeError, message]);
 
   useEffect(() => {
-    setForm();
+    setGroupData();
     return () => resetForm();
   }, []);
 
@@ -132,45 +127,47 @@ const EditGroupModal: FC<EditGroupModalInterface> = ({
           </button>
 
           <form id="edit-group" onSubmit={handleSubmit}>
-            <h1>Edit Group</h1>
+            <h1>Create Expense</h1>
 
             {error.length > 0 ? <p className="error">{error}</p> : null}
 
-            <InputField
-              name="title"
-              placeholder="Group title *"
-              value={groupData.title}
-              error={groupDataErr.title}
-              changeAction={handeChange}
-              required={true}
-            />
+            <div className="col">
+              <InputField
+                name="title"
+                placeholder="Expense *"
+                value={expenseData.title}
+                error={expenseDataErr.title}
+                changeAction={handeChange}
+                required={true}
+              />
+
+              <InputField
+                name="amount"
+                type="number"
+                placeholder="Amount *"
+                value={expenseData.amount}
+                error={expenseDataErr.amount}
+                changeAction={handeChange}
+                required={true}
+              />
+            </div>
 
             <MessageField
               name="description"
-              placeholder="Group description"
-              value={groupData.description}
-              error={groupDataErr.description}
+              placeholder="Description"
+              value={expenseData.description}
+              error={expenseDataErr.description}
               changeAction={handeChange}
             />
 
-            <div className="col">
-              <SelectIcon
-                name="icon"
-                placeholder="Select Group Icon"
-                value={groupData.icon}
-                theme={groupData.theme}
-                error={groupDataErr.icon}
-                changeAction={handeChange}
-              />
-
-              <SelectTheme
-                name="theme"
-                placeholder="Select Group Theme"
-                value={groupData.theme}
-                error={groupDataErr.theme}
-                changeAction={handeChange}
-              />
-            </div>
+            <SelectIcon
+              name="icon"
+              placeholder="Select Expense Icon"
+              value={expenseData.icon}
+              theme={group.theme}
+              error={expenseDataErr.icon}
+              changeAction={handeChange}
+            />
 
             <div className="btn-wrap">
               <Button
@@ -181,7 +178,7 @@ const EditGroupModal: FC<EditGroupModalInterface> = ({
               <Button
                 type="submit"
                 varient="fill"
-                label={status === Status.LOADING ? 'Saving...' : 'Save'}
+                label={status === Status.LOADING ? 'Creating...' : 'Create'}
                 clickAction={() => {}}
               />
             </div>
@@ -193,4 +190,4 @@ const EditGroupModal: FC<EditGroupModalInterface> = ({
   );
 };
 
-export default EditGroupModal;
+export default CreateExpenseModal;

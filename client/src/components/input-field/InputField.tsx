@@ -3,10 +3,10 @@ import { ChangeEvent, FC } from 'react';
 import './InputField.scss';
 
 interface InputFieldProps {
-  type?: 'text' | 'email' | 'password';
+  type?: 'text' | 'email' | 'password' | 'number';
   name: string;
   placeholder: string;
-  value: string;
+  value: string | number;
   error: string;
   required?: boolean;
   changeAction: (event: ChangeEvent<HTMLInputElement>) => void;
