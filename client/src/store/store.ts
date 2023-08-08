@@ -24,6 +24,11 @@ interface StoreStateInterface {
 
   // Expense
   createExpense: (groupId: string, formData: FormDataType) => void;
+  editExpense: (
+    groupId: string,
+    expenseId: string,
+    formData: FormDataType
+  ) => void;
 }
 
 export const useStore = create<StoreStateInterface>()(
@@ -140,7 +145,6 @@ export const useStore = create<StoreStateInterface>()(
         formData
       );
 
-      // @ts-ignore
       set((state) => ({
         ...state,
         groups: state.groups.map((item) =>
@@ -156,6 +160,49 @@ export const useStore = create<StoreStateInterface>()(
             ? {
                 ...state.group,
                 expenses: [...state.group.expenses, expense],
+              }
+            : state.group,
+        status,
+        message,
+        error,
+      }));
+    },
+
+    //   Edit Group
+    editExpense: async (groupId, expenseId, formData) => {
+      get().reset();
+
+      const { status, expense, message, error } = await API.editExpense(
+        groupId,
+        expenseId,
+        formData
+      );
+
+      set((state) => ({
+        ...state,
+        groups: state.groups.map((item) =>
+          item.group_id === groupId
+            ? {
+                ...item,
+                expenses: expense
+                  ? [
+                      ...item.expenses.map((exp) =>
+                        exp.expense_id === expenseId ? expense : exp
+                      ),
+                    ]
+                  : item.expenses,
+              }
+            : item
+        ),
+        group:
+          expense && state.group
+            ? {
+                ...state.group,
+                expenses: [
+                  ...state.group.expenses.map((exp) =>
+                    exp.expense_id === expenseId ? expense : exp
+                  ),
+                ],
               }
             : state.group,
         status,

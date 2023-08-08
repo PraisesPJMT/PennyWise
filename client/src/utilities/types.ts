@@ -1,8 +1,9 @@
 /* Application Types */
 
-import { Status,
+import {
+  Status,
   // initialGroup
- } from './variables';
+} from './variables';
 
 // Gen Types
 
@@ -23,8 +24,8 @@ export type ExpenseType = {
   description: string;
   icon: string;
   amount: number;
-  updatedAt: string;
-  createdAt: string;
+  updatedAt: string | Date;
+  createdAt: string | Date;
 };
 
 export type GroupType = {
@@ -100,8 +101,14 @@ export type UserResponse = {
   token: string;
 };
 
+// export type ExpenseResponse = {
+//   data: ExpenseType;
+//   message: string;
+//   token: string;
+// };
+
 export type StdApiResponse = {
-  data: GroupType[] | boolean;
+  data: GroupType[] | ExpenseType | boolean;
   message: string;
 };
 

@@ -376,4 +376,25 @@ export const API = {
       error,
     };
   },
+
+  // Edit Expense
+  editExpense: async (
+    groupId: string,
+    expenseId: string,
+    formData: FormDataType
+  ) => {
+    const response = await API.editAction(
+      `/group/${groupId}/expense/${expenseId}`,
+      formData
+    );
+
+    const { status, data, message, error } = response as APIExpenseResponse;
+
+    return {
+      expense: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
 };
