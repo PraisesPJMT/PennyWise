@@ -94,7 +94,10 @@ router.put('/:group_id', authorize, async (req, res) => {
       return res.status(404).json({ message: 'User does not exist!' });
     }
 
-    const group = await Group.findOne({ where: { group_id } });
+    const group = await Group.findOne({
+      where: { group_id },
+      include: 'expenses',
+    });
 
     if (!group) {
       return res.status(404).json({ message: 'Group does not exist!' });
@@ -128,7 +131,10 @@ router.delete('/:group_id', authorize, async (req, res) => {
       return res.status(404).json({ message: 'User does not exist!' });
     }
 
-    const group = await Group.findOne({ where: { group_id } });
+    const group = await Group.findOne({
+      where: { group_id },
+      include: 'expenses',
+    });
 
     if (!group) {
       return res.status(404).json({ message: 'Group does not exist!' });
