@@ -103,6 +103,8 @@ const CreateExpenseModal: FC<CreateExpenseModalProps> = ({
     if (init && status === Status.SUCCEEDED) {
       setNotice({ type: NoticeType.SUCCESS, message });
       closeModal();
+      resetForm();
+      setInit(false);
     }
 
     if (init && storeError) {

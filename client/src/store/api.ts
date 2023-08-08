@@ -397,4 +397,20 @@ export const API = {
       error,
     };
   },
+
+  // Delete Expense
+  deleteExpense: async (groupId: string, expenseId: string) => {
+    const response = await API.deleteAction(
+      `/group/${groupId}/expense/${expenseId}`
+    );
+
+    const { status, data, message, error } = response as APIExpenseResponse;
+
+    return {
+      expense: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
 };

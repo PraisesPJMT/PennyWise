@@ -108,6 +108,7 @@ const EditGroupModal: FC<EditGroupModalInterface> = ({
       setNotice({ type: NoticeType.SUCCESS, message });
       //   navigate('/groups');
       closeModal();
+      setInit(false);
     }
 
     if (init && storeError) {

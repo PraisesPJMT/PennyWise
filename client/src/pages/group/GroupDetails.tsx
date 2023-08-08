@@ -20,7 +20,8 @@ const GroupDetails: FC<{}> = () => {
   const [editGroupModal, setEditGroupModal] = useState(false);
   const [editExpenseModal, setEditExpenseModal] = useState(false);
   const [createExpenseModal, setCreateExpenseModal] = useState(false);
-  const [initDel, setInitDel] = useState(false);
+  const [initGroupDel, setInitGroupDel] = useState(false);
+  const [initExpenseDel, setInitExpenseDel] = useState(false);
 
   const { groupId } = useParams();
   const navigate = useNavigate();
@@ -28,28 +29,42 @@ const GroupDetails: FC<{}> = () => {
   const setNotice = useNotice((state) => state.setNotice);
   const fetchGroup = useStore((state) => state.fetchGroup);
   const deleteGroup = useStore((state) => state.deleteGroup);
+  const deleteExpense = useStore((state) => state.deleteExpense);
   const fetchedGroup = useStore((state) => state.group);
   const storeStatus = useStore((state) => state.status);
   const message = useStore((state) => state.message);
 
   const handleGroupDel = () => {
     deleteGroup(group.group_id);
-    setInitDel(true);
+    setInitGroupDel(true);
+  };
+
+  const handleExpenseDel = (expenseId: string) => {
+    deleteExpense(group.group_id, expenseId);
+    setInitExpenseDel(true);
   };
 
   const handleExpenseEdit = (expense: ExpenseType) => {
     setEditGroupModal(false);
     setExpense(expense);
     setEditExpenseModal(true);
-    setInitDel(false);
+    setInitGroupDel(false);
   };
 
   useEffect(() => {
-    if (initDel && storeStatus === Status.SUCCEEDED) {
+    if (initGroupDel && storeStatus === Status.SUCCEEDED) {
       setNotice({ type: NoticeType.SUCCESS, message });
       navigate('/groups');
+      setInitGroupDel(false);
     }
-  }, [initDel, storeStatus, message]);
+  }, [initGroupDel, storeStatus, message]);
+
+  useEffect(() => {
+    if (initExpenseDel && storeStatus === Status.SUCCEEDED) {
+      setNotice({ type: NoticeType.SUCCESS, message });
+      setInitExpenseDel(false);
+    }
+  }, [initExpenseDel, storeStatus, message]);
 
   useEffect(() => {
     if (fetchedGroup) setGroup(fetchedGroup);
@@ -108,7 +123,12 @@ const GroupDetails: FC<{}> = () => {
                   Edit
                 </button>
                 <br />
-                <button type="button">Delete</button>
+                <button
+                  type="button"
+                  onClick={() => handleExpenseDel(expense.expense_id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
 

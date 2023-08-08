@@ -29,6 +29,7 @@ interface StoreStateInterface {
     expenseId: string,
     formData: FormDataType
   ) => void;
+  deleteExpense: (groupId: string, expenseId: string) => void;
 }
 
 export const useStore = create<StoreStateInterface>()(
@@ -201,6 +202,48 @@ export const useStore = create<StoreStateInterface>()(
                 expenses: [
                   ...state.group.expenses.map((exp) =>
                     exp.expense_id === expenseId ? expense : exp
+                  ),
+                ],
+              }
+            : state.group,
+        status,
+        message,
+        error,
+      }));
+    },
+
+    //   Delete Expense
+    deleteExpense: async (groupId, expenseId) => {
+      get().reset();
+
+      const { status, expense, message, error } = await API.deleteExpense(
+        groupId,
+        expenseId
+      );
+
+      set((state) => ({
+        ...state,
+        groups: state.groups.map((item) =>
+          item.group_id === groupId
+            ? {
+                ...item,
+                expenses: expense
+                  ? [
+                      ...item.expenses.filter(
+                        (exp) => exp.expense_id !== expense?.expense_id
+                      ),
+                    ]
+                  : item.expenses,
+              }
+            : item
+        ),
+        group:
+          expense && state.group
+            ? {
+                ...state.group,
+                expenses: [
+                  ...state.group.expenses.filter(
+                    (exp) => exp.expense_id !== expense?.expense_id
                   ),
                 ],
               }
