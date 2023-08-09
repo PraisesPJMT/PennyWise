@@ -1,0 +1,60 @@
+@import '../../index.scss';
+
+.select-field {
+  width: 100%;
+
+  .label {
+    width: 100%;
+    border-left: 5px solid $blue-dark;
+    background: lighten($color: $gray, $amount: 13);
+
+    .placeholder {
+      color: $blue-dark;
+      text-align: start;
+      padding: 0.3rem 0 0.5rem 1rem;
+      background: none;
+    }
+
+    .label-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-left: 1rem;
+      padding-bottom: 0.5rem;
+      background: none;
+
+      input {
+        display: none;
+      }
+
+      input:checked ~ .theme-box,
+      input:focus ~ .theme-box,
+      input:hover ~ .theme-box {
+        border: 2px solid #000;
+        opacity: 1;
+      }
+
+      .theme-box {
+        width: 40px;
+        height: 40px;
+        border-radius: 0.4rem;
+        opacity: 0.4;
+      }
+    }
+  }
+
+  .label.err {
+    border-left: 5px solid $orange;
+  }
+
+  .error {
+    border-left: 5px solid $orange;
+    background: lighten($color: $orange, $amount: 25);
+    font-size: 0.7rem;
+    width: 100%;
+    padding: 0.05rem 0.5rem;
+    color: $orange;
+    text-align: center;
+    font-weight: 500;
+  }
+}

@@ -1,6 +1,9 @@
 import axios from 'axios';
 // import jwt_decode from 'jwt-decode';
 import {
+  APIExpenseResponse,
+  APIGroupResponse,
+  APIGroupsResponse,
   FormDataType,
   Response,
   UserResponse,
@@ -38,16 +41,135 @@ export const API = {
     }
   },
 
+  //   Fetch Action
+  fetchAction: async (endPoint: string) => {
+    API.setApiHeader();
+
+    try {
+      const response = await api.get(endPoint);
+      const { status } = response;
+      const { data, message } = response.data as Response;
+
+      if (status === 200) {
+        console.log('Fetched Data: ', JSON.stringify(data));
+
+        return {
+          status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data,
+          message,
+          error: false,
+        };
+      } else {
+        return {
+          status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data: null,
+          message,
+          error: true,
+        };
+      }
+    } catch (error: any) {
+      return {
+        status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+        data: null,
+        message:
+          error.response.data.message ||
+          'Something went wrong! Please try again!',
+        error: true,
+      };
+    }
+  },
+
   //   Create Action
-  creatAction: async (endPoint: string, formData: FormDataType) => {
+  createAction: async (endPoint: string, formData: FormDataType) => {
     API.setApiHeader();
 
     try {
       const response = await api.post(endPoint, formData);
       const { status } = response;
       const { data, message } = response.data as Response;
+      console.log('Create Response: ', response);
 
       if (status === 201) {
+        console.log('Created Data: ', JSON.stringify(data));
+
+        return {
+          status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data,
+          message,
+          error: false,
+        };
+      } else {
+        return {
+          status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data: null,
+          message,
+          error: true,
+        };
+      }
+    } catch (error: any) {
+      return {
+        status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+        data: null,
+        message:
+          error.response.data.message ||
+          'Something went wrong! Please try again!',
+        error: true,
+      };
+    }
+  },
+
+  //   Edit Action
+  editAction: async (endPoint: string, formData: FormDataType) => {
+    API.setApiHeader();
+
+    try {
+      const response = await api.put(endPoint, formData);
+      const { status } = response;
+      const { data, message } = response.data as Response;
+      // console.log('Updated Response: ', response);
+
+      if (status === 200) {
+        // console.log('Updated Data: ', JSON.stringify(data));
+
+        return {
+          status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data,
+          message,
+          error: false,
+        };
+      } else {
+        return {
+          status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+          data: null,
+          message,
+          error: true,
+        };
+      }
+    } catch (error: any) {
+      return {
+        status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+        data: null,
+        message:
+          error.response.data.message ||
+          'Something went wrong! Please try again!',
+        error: true,
+      };
+    }
+  },
+
+  //   Delete Action
+  deleteAction: async (endPoint: string) => {
+    API.setApiHeader();
+
+    try {
+      const response = await api.delete(endPoint);
+      const { status } = response;
+      const { data, message } = response.data as Response;
+      console.log('Delete Response: ', response);
+
+      if (status === 200) {
+        // console.log('Deleted Data: ', JSON.stringify(data));
+
         return {
           status: Status.SUCCEEDED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
           data,
@@ -90,6 +212,8 @@ export const API = {
           error: false,
         };
       } else {
+        API.logOut();
+
         return {
           status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
           isAuthenticated: false,
@@ -98,11 +222,13 @@ export const API = {
         };
       }
     } catch (error: any) {
+      API.logOut();
+
       return {
         status: Status.FAILED, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
         isAuthenticated: false,
         message:
-          error.response.data.message ||
+          error.response?.data?.message ||
           'Something went wrong! Please try again!',
         error: error,
       };
@@ -152,12 +278,136 @@ export const API = {
 
   //   Register User
   register: async (formData: FormDataType) => {
-    const { status, message, error } = await API.creatAction(
+    const { status, message, error } = await API.createAction(
       '/session/register',
       formData
     );
 
     return {
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Create Group
+  createGroup: async (formData: FormDataType) => {
+    const response = await API.createAction('/group', formData);
+
+    const { status, data, message, error } = response as APIGroupResponse;
+
+    return {
+      group: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Fetch All Groups
+  fetchGroups: async () => {
+    const response = await API.fetchAction('/group');
+
+    const { status, data, message, error } = response as APIGroupsResponse;
+
+    return {
+      groups: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Fetch A Group
+  fetchGroup: async (groupId: string) => {
+    const response = await API.fetchAction(`/group/${groupId}`);
+
+    const { status, data, message, error } = response as APIGroupResponse;
+
+    return {
+      group: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Edit Group
+  editGroup: async (groupId: string, formData: FormDataType) => {
+    const response = await API.editAction(`/group/${groupId}`, formData);
+
+    const { status, data, message, error } = response as APIGroupResponse;
+
+    return {
+      group: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Delete Group
+  deleteGroup: async (groupId: string) => {
+    const response = await API.deleteAction(`/group/${groupId}`);
+
+    const { status, data, message, error } = response as APIGroupResponse;
+
+    return {
+      group: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Create Expense
+  createExpense: async (groupId: string, formData: FormDataType) => {
+    const response = await API.createAction(
+      `/group/${groupId}/expense`,
+      formData
+    );
+
+    const { status, data, message, error } = response as APIExpenseResponse;
+
+    return {
+      expense: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Edit Expense
+  editExpense: async (
+    groupId: string,
+    expenseId: string,
+    formData: FormDataType
+  ) => {
+    const response = await API.editAction(
+      `/group/${groupId}/expense/${expenseId}`,
+      formData
+    );
+
+    const { status, data, message, error } = response as APIExpenseResponse;
+
+    return {
+      expense: data,
+      status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
+      message,
+      error,
+    };
+  },
+
+  // Delete Expense
+  deleteExpense: async (groupId: string, expenseId: string) => {
+    const response = await API.deleteAction(
+      `/group/${groupId}/expense/${expenseId}`
+    );
+
+    const { status, data, message, error } = response as APIExpenseResponse;
+
+    return {
+      expense: data,
       status, // 'IDLE' || 'SUCCEEDED' || 'FAILED' || 'LOADING'
       message,
       error,

@@ -1,36 +1,36 @@
 import { ChangeEvent, FC } from 'react';
 
-import './InputField.scss';
+import './MessageField.scss';
 
-interface InputFieldProps {
-  type?: 'text' | 'email' | 'password' | 'number';
+interface MessageFieldProps {
   name: string;
   placeholder: string;
-  value: string | number;
+  value: string;
   error: string;
+  rows?: number;
   required?: boolean;
-  changeAction: (event: ChangeEvent<HTMLInputElement>) => void;
+  changeAction: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const InputField: FC<InputFieldProps> = ({
-  type = 'text',
+const MessageField: FC<MessageFieldProps> = ({
   name,
   placeholder,
   value,
   error,
   required = false,
+  rows = 3,
   changeAction,
 }) => {
   return (
     <div className="field">
       <label className={error.length > 0 ? 'err' : ''}>
-        <input
+        <textarea
           name={name}
-          type={type}
           placeholder={placeholder}
           value={value}
           onChange={changeAction}
           required={required}
+          rows={rows}
         />
       </label>
       {error.length > 0 ? <p className="error">{error}</p> : null}
@@ -38,4 +38,4 @@ const InputField: FC<InputFieldProps> = ({
   );
 };
 
-export default InputField;
+export default MessageField;

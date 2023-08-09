@@ -4,7 +4,7 @@ import { NoticeType } from '../utilities/variables';
 
 export interface NoticeParam {
   message: string;
-  type: NoticeType;
+  type: keyof typeof NoticeType;
 }
 export interface Notice extends NoticeParam {
   id: string;
