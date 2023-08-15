@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import { useAuth } from '../../store/auth';
-import Splash from '../splash/Splash';
 import { Outlet } from 'react-router-dom';
+import Splash from '../splash/Splash';
+import Footer from '../../components/footer/Footer';
+
+import './Dashboard.scss';
 
 const Dashboard: React.FC<{}> = () => {
   const logout = useAuth((state) => state.logout);
@@ -21,9 +24,12 @@ const Dashboard: React.FC<{}> = () => {
   }
 
   return (
-    <>
-      <Outlet />
-    </>
+    <div id="dashboard">
+      <div id="main">
+        <Outlet />
+      </div>
+      <Footer />
+    </div>
   );
 };
 

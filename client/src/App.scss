@@ -2,10 +2,11 @@
   max-width: 650px;
   margin: auto;
   position: relative;
+  height: 100vh;
 }
 
 @media (max-width: 768px) {
   #app {
-    padding: 1rem;
+    padding: 0;
   }
 }
