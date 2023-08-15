@@ -1,0 +1,106 @@
+@import '../../index.scss';
+
+footer {
+  margin-top: auto;
+
+  .desktop {
+    height: 100px;
+    width: 100%;
+    background: $green;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 2rem;
+    color: #fff;
+    border-radius: 2rem 2rem 0 0;
+
+    & div,
+    & p,
+    & span {
+      background: none;
+    }
+
+    .ft-logo {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+
+      img {
+        height: 100%;
+        border-radius: 50%;
+      }
+
+      .logo {
+        font-size: 1.4rem;
+        font-weight: 700;
+
+        .orange {
+          color: $orange;
+        }
+      }
+    }
+
+    .copy-write {
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+  }
+
+  .mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  footer {
+    .desktop {
+      display: none;
+    }
+
+    .mobile {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem;
+      background: lighten($color: $green, $amount: 60);
+
+      a {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: $green;
+        padding: 0.3rem;
+        border-radius: 0.3rem;
+        background: none;
+
+        svg {
+          font-size: 2rem;
+          background: none;
+        }
+
+        span {
+          background: none;
+        }
+
+        &:hover {
+          color: #fff;
+          background: $green;
+
+          svg {
+            background: $green;
+          }
+
+          span {
+            background: $green;
+          }
+        }
+      }
+    }
+  }
+}
