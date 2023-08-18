@@ -5,10 +5,10 @@ import {
   BiCog,
   BiSolidUserDetail,
 } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 import Logo from '../../assets/pennywize.png';
 
 import './Footer.scss';
-import { Link } from 'react-router-dom';
 
 const Footer: FC<{}> = () => {
   const footerMenu = [

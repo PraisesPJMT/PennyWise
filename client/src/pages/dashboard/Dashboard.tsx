@@ -3,6 +3,7 @@ import { useAuth } from '../../store/auth';
 import { Outlet } from 'react-router-dom';
 import Splash from '../splash/Splash';
 import Footer from '../../components/footer/Footer';
+import Header from '../../components/header/Header';
 
 import './Dashboard.scss';
 
@@ -25,6 +26,7 @@ const Dashboard: React.FC<{}> = () => {
 
   return (
     <div id="dashboard">
+      <Header />
       <div id="main">
         <Outlet />
       </div>
